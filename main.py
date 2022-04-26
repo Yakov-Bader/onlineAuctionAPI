@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 #add git huks
 
-from flask import Flask
+from flask import *
 
 app = Flask(__name__)
 
