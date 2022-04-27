@@ -26,7 +26,7 @@ def hello_world():
 
 @app.route('/signup')
 def signUp():
-    if request.args["email"] and request.args["name"] and request.args["password"] and request.args["password2"]:
+    if request.args["name"] or request.args["password"] or request.args["password2"]:
         return jsonify(request.args)
     else:
         return jsonify({"sdfg":"sdfg"})
