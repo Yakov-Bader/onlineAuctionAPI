@@ -29,17 +29,18 @@ def hello_world():
 
 
 @app.route('/signup', methods=['POST'])
-def signup():
-    project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
-    load_dotenv(os.path.join(project_folder, '.env'))
-    password = os.getenv("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+async def signup():
     info = request.args
     if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
-        users = db.users
-        users.insert_one({'name': info["name"], 'email': info["email"], 'password':info["password"]})
+
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
+        project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
+        load_dotenv(os.path.join(project_folder, '.env'))
+        password = os.getenv("password")
+        link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
+        client = MongoClient(link)
+        db = client.get_database('myAuctionDB')
+        users = db.users
+        await users.insert_one({'name': info["name"]})
         return jsonify({"status": "error", "message": "you are missing information"})
