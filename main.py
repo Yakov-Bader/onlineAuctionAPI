@@ -42,5 +42,6 @@ async def signup():
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        await users.insert_one({'name': info["name"]})
+        user = {'name': info["name"]}
+        await users.insert_one(user)
         return jsonify({"status": "error", "message": "you are missing information"})
