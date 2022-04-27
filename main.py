@@ -29,9 +29,7 @@ def hello_world():
 def signup():
 
     info = request.args
-    if info["password"] == info["password2"] and info["name"] and info["email"]:
-        return jsonify({"request": "succeeded", "welcome to": info["name"]})
-    else:
+    if not (info["password"] == info["password2"] and info["name"] and info["email"]):
         mising = ""
         if not info["password"]:
             mising += " password "
@@ -42,4 +40,6 @@ def signup():
         if not info["email"]:
             mising += " email "
 
-        return jsonify({"error": "you are missing arguments", "the arguments are ":mising})
+        return jsonify({"error": "you are missing arguments", "the arguments are ": mising})
+    else:
+        return jsonify({"request": "succeeded", "welcome to": info["name"]})
