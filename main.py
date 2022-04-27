@@ -35,7 +35,7 @@ async def signup():
 
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
-        project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
+        project_folder = os.path.expanduser('/onlineAuction/')
         load_dotenv(os.path.join(project_folder, '.env'))
         password = os.getenv("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
