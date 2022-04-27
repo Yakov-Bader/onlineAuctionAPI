@@ -29,4 +29,4 @@ def signUp():
     if request.args["email"] and request.args["name"] and request.args["password"] and request.args["password2"]:
         return jsonify(request.args)
     else:
-        return jsonify(request.args)
+        return jsonify({"sdfg":"sdfg"})
