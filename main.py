@@ -24,9 +24,22 @@ def git_update():
 def hello_world():
     return jsonify({"chaim shwartz 3": "yakov bader 2"})
 
-@app.route('/signup')
-def signUp():
-    if request.args["name"] or request.args["password"] or request.args["password2"]:
-        return jsonify(request.args)
+
+@app.route('/signup', methods=['POST'])
+def signup():
+
+    info = request.args
+    if info["password"] == info["password2"] and info["name"] and info["email"]:
+        return jsonify({"request": "succeeded", "welcome to": info["name"]})
     else:
-        return jsonify({"sdfg":"sdfg"})
+        mising = ""
+        if not info["password"]:
+            mising += " password "
+        if not info["password2"]:
+            mising += " password2 "
+        if not info["name"]:
+            mising += " name "
+        if not info["email"]:
+            mising += " email "
+
+        return jsonify({"error": "you are missing arguments", "the arguments are ":mising})
