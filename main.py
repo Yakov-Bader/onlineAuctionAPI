@@ -23,3 +23,7 @@ def git_update():
 @app.route('/')
 def hello_world():
     return jsonify({"chaim shwartz 3": "yakov bader 2"})
+
+@app.route('/signup')
+def signUp():
+    return jsonify(request.args)
