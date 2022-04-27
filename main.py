@@ -12,9 +12,6 @@ app = Flask(__name__)
 project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
 load_dotenv(os.path.join(project_folder, '.env'))
 password = os.getenv("password")
-link = 'mongodb+srv://yakov:'+password+'@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-client = MongoClient(link)
-db = client.get_database('myAuctionDB')
 
 
 @app.route('/git_update', methods=['POST'])
@@ -37,7 +34,9 @@ def hello_world():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-
+    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
+    client = MongoClient(link)
+    db = client.get_database('myAuctionDB')
     info = request.args
     if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
         users = db.users
