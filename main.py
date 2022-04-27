@@ -9,10 +9,6 @@ from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-# project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
-# load_dotenv(os.path.join(project_folder, '.env'))
-# password = os.getenv("password")
-
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
@@ -34,6 +30,9 @@ def hello_world():
 
 @app.route('/signup', methods=['POST'])
 def signup():
+    project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
+    load_dotenv(os.path.join(project_folder, '.env'))
+    password = os.getenv("password")
     link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
