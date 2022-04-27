@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 #add git huks
 
-from flask import *
+from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
 
