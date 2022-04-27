@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
-load_dotenv(os.path.join(project_folder, '.env'))
-password = os.getenv("password")
+# project_folder = os.path.expanduser('C:/Users/Yakov/PycharmProjects/onlineAuction')
+# load_dotenv(os.path.join(project_folder, '.env'))
+# password = os.getenv("password")
 
 
 @app.route('/git_update', methods=['POST'])
