@@ -1,8 +1,5 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-# add git huks
+# connect to mongoDB, connect to socket.io
 
 from flask import Flask, request, render_template, jsonify
 from pip._internal.vcs import git
@@ -31,14 +28,14 @@ def signup():
     info = request.args
     if not (info["password"] == info["password2"] and info["name"] and info["email"]):
         missing = ""
-        if not info["password"]:
-            missing += " password "
+        if info["password"]:
+            missing.join(" password ")
         if not info["password2"]:
-            missing += " password2 "
+            missing.join(" password2 ")
         if not info["name"]:
-            missing += " name "
+            missing.join(" name ")
         if not info["email"]:
-            missing += " email "
+            missing.join(" email ")
         return jsonify({"status": "error", "message": "you are missing ".format(missing)})
     else:
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
