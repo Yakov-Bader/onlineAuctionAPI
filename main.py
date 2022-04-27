@@ -30,16 +30,15 @@ def signup():
 
     info = request.args
     if not (info["password"] == info["password2"] and info["name"] and info["email"]):
-        mising = ""
+        missing = ""
         if not info["password"]:
-            mising += " password "
+            missing += " password "
         if not info["password2"]:
-            mising += " password2 "
+            missing += " password2 "
         if not info["name"]:
-            mising += " name "
+            missing += " name "
         if not info["email"]:
-            mising += " email "
-
-        return jsonify({"error": "you are missing arguments", "the arguments are ": mising})
+            missing += " email "
+        return jsonify({"status": "error", "message": "you are missing ".format(missing)})
     else:
-        return jsonify({"request": "succeeded", "welcome to": info["name"]})
+        return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
