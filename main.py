@@ -35,13 +35,13 @@ async def signup():
 
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
-        project_folder = os.path.expanduser('/onlineAuction/')
+        project_folder = os.path.expanduser('/home/yakovbader/onlineAuctionAPI')
         load_dotenv(os.path.join(project_folder, '.env'))
         password = os.getenv("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        user = {'name': info["name"]}
+        user = {"dfghjhgf": "dfghj"}
         await users.insert_one(user)
         return jsonify({"status": "error", "message": "you are missing information"})
