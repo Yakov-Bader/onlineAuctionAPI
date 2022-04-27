@@ -26,16 +26,8 @@ def hello_world():
 def signup():
 
     info = request.args
-    if not (info["password"] == info["password2"] and info["name"] and info["email"]):
-        missing = " "
-        if not info["password"]:
-            missing.join(" password ")
-        if not info["password2"]:
-            missing.join(" password2 ")
-        if not info["name"]:
-            missing.join(" name ")
-        if not info["email"]:
-            missing.join(" email ")
-        return jsonify({"status": "error", "message": "you are missing {}".format(missing)})
-    else:
+    if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
+    else:
+        return jsonify({"status": "error", "message": "you are missing information"})
+
