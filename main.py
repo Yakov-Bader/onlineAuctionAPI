@@ -27,8 +27,8 @@ def signup():
 
     info = request.args
     if not (info["password"] == info["password2"] and info["name"] and info["email"]):
-        missing = ""
-        if info["password"]:
+        missing = " "
+        if not info["password"]:
             missing.join(" password ")
         if not info["password2"]:
             missing.join(" password2 ")
@@ -36,6 +36,6 @@ def signup():
             missing.join(" name ")
         if not info["email"]:
             missing.join(" email ")
-        return jsonify({"status": "error", "message": "you are missing ".format(missing)})
+        return jsonify({"status": "error", "message": "you are missing {}".format(missing)})
     else:
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
