@@ -2,14 +2,12 @@
 # connect to mongoDB, connect to socket.io
 import time
 
-import pymongo
 from dotenv import load_dotenv
 from flask import Flask, request, render_template, jsonify
 from pip._internal.vcs import git
 import git
 from pymongo import MongoClient
 import os
-import asyncio
 
 app = Flask(__name__)
 
@@ -41,7 +39,7 @@ async def signup():
     if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
         password = os.getenv("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-        client = pymongo.MongoClient(link)
+        client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
         user = {
@@ -52,7 +50,7 @@ async def signup():
             "offers": [],
             "saved": []
         }
-        users.insert_one(user)
+        return users.insert_one(user)
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
         return jsonify({"status": "error", "message": "you are missing some arguments"})
