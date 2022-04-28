@@ -11,8 +11,10 @@ import os
 
 app = Flask(__name__)
 
-#project_folder = os.path.expanduser('onlineAuction')
-#load_dotenv(os.path.join(project_folder, '.env'))
+project_home = '/home/yakovbader/onlineAuctionAPI'
+# project_home = 'onlineAuction'
+project_folder = os.path.expanduser(project_home)
+load_dotenv(os.path.join(project_folder, '.env'))
 
 
 @app.route('/git_update', methods=['POST'])
@@ -54,7 +56,6 @@ async def pushuser(users, info):
         'offers': [],
         'saved': []
     })
-
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)
