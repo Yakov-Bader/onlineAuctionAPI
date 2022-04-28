@@ -7,6 +7,10 @@ from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
+password = os.getenv("password")
+link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
+client = MongoClient(link)
+db = client.get_database('myAuctionDB')
 
 
 @app.route('/git_update', methods=['POST'])
@@ -31,11 +35,6 @@ async def signup():
 
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
-        password = os.getenv("password")
-        link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-        client = MongoClient(link)
-        db = client.get_database('myAuctionDB')
         users = db.users
-        user = {"dfghjhgf": "dfghj"}
-        await users.insert_one(user)
-        return jsonify({"status": "error", "message": "you are missing information"})
+        user = await users.find({})
+        return jsonify({"status": "error", "message": user})
