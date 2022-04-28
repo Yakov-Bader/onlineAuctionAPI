@@ -37,11 +37,11 @@ async def signup():
     info = request.args
     if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
         password = os.getenv("password")
-        return password
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
+        return users
         pushuser(users, info)
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
