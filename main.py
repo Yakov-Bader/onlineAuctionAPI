@@ -33,7 +33,8 @@ def hello_world():
 
 
 @app.route('/signup', methods=['POST'])
-async def signup():
+def signup():
+    # might need to change to form not args
     info = request.args
     if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
         password = os.getenv("password")
@@ -41,22 +42,18 @@ async def signup():
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        return users
-        pushuser(users, info)
+        users.insert_one({
+            'name': info["name"],
+            'email': info["email"],
+            'password': info["password"],
+            'sales': [],
+            'offers': [],
+            'saved': []
+        })
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
-
-async def pushuser(users, info):
-    return users.insert_one({
-        'name': info["name"],
-        'email': info["email"],
-        'password': info["password"],
-        'sales': [],
-        'offers': [],
-        'saved': []
-    })
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)
