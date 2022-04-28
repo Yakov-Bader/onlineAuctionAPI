@@ -50,8 +50,8 @@ async def signup():
             "offers": [],
             "saved": []
         }
-        return link
         users.insert_one(user)
+        return link
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
         return jsonify({"status": "error", "message": "you are missing some arguments"})
