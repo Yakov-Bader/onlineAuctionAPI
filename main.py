@@ -8,6 +8,7 @@ from pip._internal.vcs import git
 import git
 from pymongo import MongoClient
 import os
+import asyncio
 
 app = Flask(__name__)
 
@@ -33,7 +34,7 @@ def hello_world():
 
 
 @app.route('/signup', methods=['POST'])
-def signup():
+async def signup():
     # might need to change to form not args
     info = request.args
     if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
@@ -42,18 +43,22 @@ def signup():
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        users.insert_one({
-            'name': info["name"],
-            'email': info["email"],
-            'password': info["password"],
-            'sales': [],
-            'offers': [],
-            'saved': []
-        })
-        return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
+        update = await addUser(users, info)
+        return jsonify({"status": update, "message": " welcome to {} {} ".format(info["name"], info["email"])})
     else:
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
+
+async def addUser(users, info):
+    user = {
+        "name": info["name"],
+        "email": info["email"],
+        "password": info["password"],
+        "sales": [],
+        "offers": [],
+        "saved": []
+    }
+    return users.insert_one(user)
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)
