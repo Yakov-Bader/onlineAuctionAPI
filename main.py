@@ -39,8 +39,8 @@ async def signup():
         password = os.getenv("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
         client = MongoClient(link)
-        return "until here"
         db = client.get_database('myAuctionDB')
+        return "until here"
         users = db.users
         pushuser(users, info)
         return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
