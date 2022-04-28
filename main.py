@@ -42,6 +42,7 @@ def signup():
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
+        return "sdfg"
         users.insert_one({
             'name': info["name"],
             'email': info["email"],
