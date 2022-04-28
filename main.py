@@ -18,11 +18,8 @@ def git_update():
     return '', 200
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def hello_world():
-
-   # users.find({})
-   # users.find_one({})
 
     return jsonify({"chaim shwartz 3": "yakov bader 2"})
 
