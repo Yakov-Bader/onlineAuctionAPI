@@ -5,7 +5,6 @@ from pip._internal.vcs import git
 import git
 from pymongo import MongoClient
 import os
-from dotenv import load_dotenv
 
 app = Flask(__name__)
 
