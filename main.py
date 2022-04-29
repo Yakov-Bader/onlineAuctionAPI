@@ -42,8 +42,6 @@ async def signup():
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        found = users.find({"email": info["email"]})
-        print(found)
         user = {
             "name": info["name"],
             "email": info["email"],
