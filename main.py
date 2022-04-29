@@ -32,7 +32,7 @@ def hello_world():
 
 
 @app.route('/signup', methods=['POST'])
-async def signup():
+def signup():
     # might need to change to form not args
     info = request.args
     if info["password"] == info["password2"] and info["name"] and info["email"] and info["password"] and info["password2"]:
@@ -41,7 +41,7 @@ async def signup():
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        if not users.find({'email': info["email"]}):
+        if not users.find_one({'email': info["email"]}):
             user = {
                 "name": info["name"],
                 "email": info["email"],
@@ -58,8 +58,8 @@ async def signup():
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
 
-@app.route('/signin', methods=['POST'])
-async def signip():
+@app.route('/signin', methods=['GET'])
+def signin():
     # might need to change to form not args
     info = request.args
     password = os.environ.get("password")
@@ -67,10 +67,11 @@ async def signip():
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
     users = db.users
-    if users.find({"email": info["email"],"password": info["password"]}):
-        return jsonify({"status": "ok", "message": " welcome, here i need a link to the website, for render "})
+    if users.find_one({'email': info["email"], 'password': info["password"]}):
+        return jsonify({"status": "ok", "message": " welcome, here i need a link to the website, for render :)"})
     else:
         return jsonify({"status": "error", "message": "you dont exist, i need a link to the sign up page"})
+
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)
