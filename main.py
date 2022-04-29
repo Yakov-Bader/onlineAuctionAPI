@@ -28,7 +28,7 @@ def git_update():
 @app.route('/')
 def hello_world():
 
-    return jsonify({"chaim shwartz 3": "yakov bader 3"})
+    return jsonify({"status": "ok", "message": "send here a link to the sign up page"})
 
 
 @app.route('/signup', methods=['POST'])
@@ -58,9 +58,19 @@ async def signup():
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
 
-async def addUser(users, info):
-
-    return
+@app.route('/signin', methods=['POST'])
+async def signip():
+    # might need to change to form not args
+    info = request.args
+    password = os.environ.get("password")
+    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
+    client = MongoClient(link)
+    db = client.get_database('myAuctionDB')
+    users = db.users
+    if users.find({"email": info["email"],"password": info["password"]}):
+        return jsonify({"status": "ok", "message": " welcome, here i need a link to the website, for render "})
+    else:
+        return jsonify({"status": "error", "message": "you dont exist, i need a link to the sign up page"})
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)
