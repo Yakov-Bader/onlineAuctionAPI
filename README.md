@@ -12,7 +12,7 @@ response: `{"status": "error", "message": "you are missing some arguments"}`
 required parameters: email, password    
 response: `{"status": "ok", "message": "welcome, here i need a link to the website, for render :)"}`    
 response: `{"status": "error", "message": "you dont exist, i need a link to the sign up page, or reload to let his try again"}`
-##sales
+## sales
 **GET** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)   
 no parameters needed;   
 response array of 10 objects of sales:`[{   
