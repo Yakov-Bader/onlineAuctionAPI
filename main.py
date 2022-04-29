@@ -11,10 +11,10 @@ import os
 
 app = Flask(__name__)
 
-project_home = '/home/yakovbader/onlineAuctionAPI'
+#project_home = '/home/yakovbader/onlineAuctionAPI'
 # project_home = 'onlineAuction'
-project_folder = os.path.expanduser(project_home)
-load_dotenv(os.path.join(project_folder, '.env'))
+#project_folder = os.path.expanduser(project_home)
+#load_dotenv(os.path.join(project_folder, '.env'))
 
 
 @app.route('/git_update', methods=['POST'])
