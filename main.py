@@ -1,9 +1,8 @@
 
-# connect to mongoDB, connect to socket.io
-import time
+# connect to socket.io
 
-from dotenv import load_dotenv
 from flask import Flask, request, render_template, jsonify
+
 from pip._internal.vcs import git
 import git
 from pymongo import MongoClient
@@ -11,10 +10,6 @@ import os
 
 app = Flask(__name__)
 
-#project_home = '/home/yakovbader/onlineAuctionAPI'
-# project_home = 'onlineAuction'
-#project_folder = os.path.expanduser(project_home)
-#load_dotenv(os.path.join(project_folder, '.env'))
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
@@ -58,7 +53,7 @@ def signup():
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
 
-@app.route('/signin', methods=['GET'])
+@app.route('/signin')
 def signin():
     # might need to change to form not args
     info = request.args
@@ -71,6 +66,19 @@ def signin():
         return jsonify({"status": "ok", "message": " welcome, here i need a link to the website, for render :)"})
     else:
         return jsonify({"status": "error", "message": "you dont exist, i need a link to the sign up page"})
+
+
+@app.route('/sales')
+def sales():
+    password = os.environ.get("password")
+    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
+    client = MongoClient(link)
+    db = client.get_database('myAuctionDB')
+    sales = db.sales
+    results = []
+    for s in sales.find({}, {"_id": 0}).limit(10):
+        results.append(s)
+    return jsonify(results)
 
 
 if __name__ == '__main__':
