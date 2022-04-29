@@ -16,7 +16,6 @@ app = Flask(__name__)
 #project_folder = os.path.expanduser(project_home)
 #load_dotenv(os.path.join(project_folder, '.env'))
 
-
 @app.route('/git_update', methods=['POST'])
 def git_update():
     repo = git.Repo('./onlineAuctionAPI')
@@ -42,16 +41,19 @@ async def signup():
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        user = {
-            "name": info["name"],
-            "email": info["email"],
-            "password": info["password"],
-            "sales": [],
-            "offers": [],
-            "saved": []
-        }
-        users.insert_one(user)
-        return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
+        if not users.find({'email': info["email"]}):
+            user = {
+                "name": info["name"],
+                "email": info["email"],
+                "password": info["password"],
+                "sales": [],
+                "offers": [],
+                "saved": []
+            }
+            users.insert_one(user)
+            return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
+        else:
+            return jsonify({"status": "error", "message": "you already exist"})
     else:
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
