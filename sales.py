@@ -20,7 +20,7 @@ def sales(request):
         if not(info["admin"] and info["image"] and info["details"] and info["name"] and info["price"]):
             return jsonify({"status": "error", "message": "you are missing some details"})
         # might need to change to form not args
-        saleid = int(os.environ.get("saleID"))+1
+        saleid = 1+1
         saleid = str(saleid)
 
         sale = {
