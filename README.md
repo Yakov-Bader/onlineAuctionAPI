@@ -18,7 +18,19 @@ response: `{"status": "error", "message": "you dont exist, i need a link to the 
 **GET** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)   
 describe: this is for getting the list of sales for the home page   
 no parameters needed;   
-response array of up to 10 objects of sales:`[{ 
+response array of up to 10 objects of sales:        
+```
+[{      "saleid": "saleid",
+        "admin": "admin email",
+        "chat": "the chat id",
+        "details": "it is good ", 
+        "high": "buyer mail",
+        "image": "link to a image",
+        "name": "sale name",
+        "price": "20202",   
+        "sold": true 
+        }, 
+        { 
         "saleid": "saleid",
         "admin": "admin email",
         "chat": "the chat id",
@@ -27,8 +39,8 @@ response array of up to 10 objects of sales:`[{
         "image": "link to a image",
         "name": "sale name",
         "price": "20202",   
-        "sold": true }]`   
-
+        "sold": true } ]
+```
 **POST** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)    
 describe: this is for a admin to post a new sale   
 required parameters: admin, image, details, price, name;     

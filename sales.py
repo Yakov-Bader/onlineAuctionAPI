@@ -39,6 +39,7 @@ def sales(request):
 
 
 def bid(request):
+    # need to update the user that he is in this sale
     info = request.args
     password = os.environ.get("password")
     link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
