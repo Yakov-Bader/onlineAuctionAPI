@@ -21,6 +21,7 @@ def signup(request):
     # might need to change to form not args
     info = request.args
     if info["password"] and info["name"] and info["email"]:
+        return "sdfghjk"
         password = os.environ.get("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
         client = MongoClient(link)

@@ -4,7 +4,7 @@
 ## Sign Up
 **POST** [https://onlineauctionapi.herokuapp.com/signup](https://onlineauctionapi.herokuapp.com/signup)   
 describe: this is for signing up to the website   
-required parameters: name, email, password, password2      
+required parameters: name, email, password      
 response: `{"status": "ok", "message": "welcome to ${name} ${email}" }`   
 response: `{"status": "error", "message": "you already exist, link to sign in page" }`   
 response: `{"status": "error", "message": "you are missing some arguments"}`
