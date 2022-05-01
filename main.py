@@ -3,11 +3,14 @@ import flask
 from inup import signin, signup
 from sales import sales, bid, like
 from flask import Flask, request, render_template, jsonify
+from flask_cors import CORS
+
 
 from pip._internal.vcs import git
 import git
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/git_update', methods=['POST'])
