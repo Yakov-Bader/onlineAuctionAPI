@@ -10,7 +10,7 @@ from pip._internal.vcs import git
 import git
 
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 
 
 @app.route('/git_update', methods=['POST'])
