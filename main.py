@@ -22,7 +22,7 @@ def git_update():
 
 
 @app.route('/')
-@cross_origin()
+@cross_origin('/', methods=['GET', 'POST'])
 def hello_world():
     return jsonify({"status": "ok", "message": "send here a link to the sign up page"})
 
