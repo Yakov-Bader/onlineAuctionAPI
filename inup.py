@@ -18,7 +18,6 @@ def signin(request):
 
 
 def signup(request):
-    return "sdfghjk"
     # might need to change to form not args
     info = request.args
     if info["password"] and info["name"] and info["email"]:
