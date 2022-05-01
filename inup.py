@@ -18,8 +18,7 @@ def signin(request):
 
 
 def signup(request):
-    info = request.form
-    print(info)
+    info = request.args
     if info.get("password") and info.get("name") and info.get("email"):
         password = os.environ.get("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
