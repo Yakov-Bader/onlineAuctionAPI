@@ -3,7 +3,7 @@ import flask
 from inup import signin, signup
 from sales import sales, bid, like
 from flask import Flask, request, render_template, jsonify
-#from flask_cors import CORS
+from flask_cors import cross_origin
 
 
 from pip._internal.vcs import git
@@ -23,6 +23,7 @@ def git_update():
 
 
 @app.route('/')
+@cross_origin()
 def hello_world():
     return jsonify({"status": "ok", "message": "send here a link to the sign up page"})
 
