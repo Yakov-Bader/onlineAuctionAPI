@@ -18,24 +18,25 @@ def signin(request):
 
 
 def signup(request):
-    info = request.body
-    if info["password"] and info["name"] and info["email"]:
+    info = request.form
+    print(info)
+    if info.get("password") and info.get("name") and info.get("email"):
         password = os.environ.get("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        if not users.find_one({'email': info["email"].lower()}):
+        if not users.find_one({'email': info.get("email").lower()}):
             user = {
-                "name": info["name"],
-                "email": info["email"].lower(),
-                "password": info["password"],
+                "name": info.get("name"),
+                "email": info.get("email").lower(),
+                "password": info.get("password"),
                 "sales": [],
                 "offers": [],
                 "saved": []
             }
             users.insert_one(user)
-            return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"].lower())})
+            return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info.get("name"), info.get("email").lower())})
         else:
             return jsonify({"status": "error", "message": "you already exist"})
     else:
