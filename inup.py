@@ -11,7 +11,7 @@ def signin(request):
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
     users = db.users
-    if users.find_one({'email': info["email"], 'password': info["password"]}):
+    if users.find_one({'email': info["email"].lower(), 'password': info["password"]}):
         return jsonify({"status": "ok", "message": " welcome, here i need a link to the website, for render :)"})
     else:
         return jsonify({"status": "error", "message": "you dont exist, i need a link to the sign up page"})
@@ -26,17 +26,17 @@ def signup(request):
         client = MongoClient(link)
         db = client.get_database('myAuctionDB')
         users = db.users
-        if not users.find_one({'email': info["email"]}):
+        if not users.find_one({'email': info["email"].lower()}):
             user = {
                 "name": info["name"],
-                "email": info["email"],
+                "email": info["email"].lower(),
                 "password": info["password"],
                 "sales": [],
                 "offers": [],
                 "saved": []
             }
             users.insert_one(user)
-            return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"])})
+            return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info["name"], info["email"].lower())})
         else:
             return jsonify({"status": "error", "message": "you already exist"})
     else:

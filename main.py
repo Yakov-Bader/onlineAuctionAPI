@@ -1,13 +1,11 @@
 # connect to socket.io
 import flask
 from inup import signin, signup
-from sales import sales, bid
+from sales import sales, bid, like
 from flask import Flask, request, render_template, jsonify
 
 from pip._internal.vcs import git
 import git
-from pymongo import MongoClient
-import os
 
 app = Flask(__name__)
 
@@ -44,6 +42,11 @@ def Sales():
 @app.route('/bid', methods=['POST'])
 def Bid():
     return bid(request)
+
+
+@app.route('/like', methods=['POST'])
+def Like():
+    return like(request)
 
 
 if __name__ == '__main__':

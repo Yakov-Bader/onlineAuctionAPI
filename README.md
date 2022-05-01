@@ -43,9 +43,10 @@ response array of up to 10 objects of sales:
 ```
 **POST** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)    
 describe: this is for a admin to post a new sale   
-required parameters: admin, image, details, price, name;     
+required parameters: admin, password, image, details, price, name;     
 response: `{"status": "ok", "message": "you have crated a new sale"}`   
-response: `{"status": "error", "message": "you are missing some details"}`     
+response: `{"status": "error", "message": "you are missing some details or i don't recognize you"}`
+response: `{"status": "error", "message": "you already have a sale with this name"}`
 ## Bid
 **POST** [https://onlineauctionapi.herokuapp.com/bid](https://onlineauctionapi.herokuapp.com/bid)     
 describe: this is for to bid on a sale   
@@ -53,3 +54,11 @@ required parameters: email, password, saleid, price;
 response: `{"status": "ok", "message": "you have updated the sale"}`
 response: `{"status": "error", "message": "you need to bid higher"}`    
 response: `{"status": "error", "message": "I don't recognize you"}`
+## Like
+**POST** [https://onlineauctionapi.herokuapp.com/like](https://onlineauctionapi.herokuapp.com/like)    
+describe: when someone likes or unlikes a sale, it will appear or disappear from the liked list
+required email, password, id, like (0 for remove like or 1 for like);   
+response: `{"status": "ok", "message": "your remove like was successful"}`    
+response: `{"status": "ok", "message": "your like was successful"}`   
+response: `{"status": "error", "message": "I don't recognize you"}`    
+response: `{"status": "error", "message": "you are missing some details"}`
