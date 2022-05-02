@@ -76,7 +76,7 @@ response: `{"status": "success", "message": "your remove like was successful"}`
 response: `{"status": "success", "message": "your like was successful"}`   
 response: `{"status": "error", "message": "I don't recognize you"}`    
 response: `{"status": "error", "message": "you are missing some details"}`  
-##Remove  
+## Remove  
 **POST** [https://onlineauctionapi.herokuapp.com/remove](https://onlineauctionapi.herokuapp.com/remove)    
 describe: admin remove a sale
 required parameters: email, password, id, price;  
