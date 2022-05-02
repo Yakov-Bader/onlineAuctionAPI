@@ -17,8 +17,9 @@ response: `{"status": "error", "message": "you dont exist, i need a link to the 
 ## Sales
 **GET** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)   
 describe: this is for getting the list of sales for the home page   
-no parameters needed;   
-response array of up to 10 objects of sales:        
+required parameters: email, password;   
+response: `{"status": "error", "message": "I don't recognize you"}`  
+response: array of up to 10 objects of sales:
 ```
 [{      "saleid": "saleid",
         "admin": "admin email",
@@ -28,7 +29,10 @@ response array of up to 10 objects of sales:
         "image": "link to a image",
         "name": "sale name",
         "price": "20202",   
-        "sold": true 
+        "sold": true,
+        "admin":1,
+        "offers: 0,
+        "saved":0
         }, 
         { 
         "saleid": "saleid",
@@ -38,15 +42,19 @@ response array of up to 10 objects of sales:
         "high": "buyer mail",
         "image": "link to a image",
         "name": "sale name",
-        "price": "20202",   
+        "price": "20202", 
+        "admin":0,
+        "offers: 1,
+        "saved":1, 
         "sold": true } ]
 ```
 **POST** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)    
 describe: this is for a admin to post a new sale   
 required parameters: admin, password, image, details, price, name;     
 response: `{"status": "success", "message": "you have crated a new sale"}`   
-response: `{"status": "error", "message": "you are missing some details or i don't recognize you"}`
+response: `{"status": "error", "message": "you are missing some details"}`
 response: `{"status": "error", "message": "you already have a sale with this name"}`
+response: `{"status": "error", "message": "I don't recognize you"}`
 ## Bid
 **POST** [https://onlineauctionapi.herokuapp.com/bid](https://onlineauctionapi.herokuapp.com/bid)     
 describe: this is for to bid on a sale   

@@ -12,46 +12,57 @@ def checkuser(email, password, users):
 
 
 def sales(request):
+    info = request.json
     password = os.environ.get("password")
     link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
+    users = db.users
     sales = db.sales
-    if flask.request.method == 'GET':
-        results = []
-        for s in sales.find({}, {"_id": 0}).limit(10):
-            if not s["sold"]:
-                results.append(s)
-        return jsonify(results)
-    if flask.request.method == 'POST':
-        info = request.json
-        users = db.users
-        if not (info.get("image") and info.get("details") and info.get("name") and info.get("price") and checkuser(info.get("admin"),
-                                                                                                   info.get("password"),
-                                                                                                   users)):
-            return jsonify({"status": "error", "message": "you are missing some details or i don't recognize you"})
-        if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
-            saleid = db.id
-            sid = saleid.find_one({})
-            sid = sid["saleid"]
-            saleid.update_one({"saleid": sid}, {"$set": {"saleid": sid + 1}})
-            sale = {
-                "saleid": sid,
-                "admin": info.get("admin").lower(),
-                "chat": "chat id",
-                "image": info.get("image"),
-                "details": info.get("details"),
-                "high": "no one gave a bid yet",
-                "name": info.get("name"),
-                "price": float(info.get("price")),
-                "sold": False
-            }
-            sales.insert_one(sale)
-            users = db.users
-            users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": sid}})
-            return jsonify({"status": "success", "message": "you have crated a new sale"})
-        else:
-            return jsonify({"status": "error", "message": "you already have a sale with this name"})
+    if checkuser(info.get("email"), info.get("password"), users):
+        if flask.request.method == 'GET':
+            results = []
+            for s in sales.find({}, {"_id": 0}).limit(10):
+                user = users.find_one({"email": info.get("email"), "password": info.get("password")})
+                s["admin"] = 0
+                s["offers"] = 0
+                s["saved"] = 0
+                if str(s["saleid"]) in user["sales"]:
+                    s["admin"] = 1
+                if str(s["saleid"]) in user["offers"]:
+                    s["offers"] = 1
+                if str(s["saleid"]) in user["saved"]:
+                    s["saved"] = 1
+                if not s["sold"]:
+                    results.append(s)
+            return jsonify(results)
+        if flask.request.method == 'POST':
+            if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):
+                return jsonify({"status": "error", "message": "you are missing some details"})
+            if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
+                saleid = db.id
+                sid = saleid.find_one({})
+                sid = sid["saleid"]
+                saleid.update_one({"saleid": sid}, {"$set": {"saleid": sid + 1}})
+                sale = {
+                    "saleid": sid,
+                    "admin": info.get("admin").lower(),
+                    "chat": "chat id",
+                    "image": info.get("image"),
+                    "details": info.get("details"),
+                    "high": "no one gave a bid yet",
+                    "name": info.get("name"),
+                    "price": float(info.get("price")),
+                    "sold": False
+                }
+                sales.insert_one(sale)
+                users = db.users
+                users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": sid}})
+                return jsonify({"status": "success", "message": "you have crated a new sale"})
+            else:
+                return jsonify({"status": "error", "message": "you already have a sale with this name"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})
 
 
 def bid(request):
@@ -82,7 +93,6 @@ def like(request):
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
     users = db.users
-    # return info.get("email")
     if info.get("email") and info.get("id"):
         if checkuser(info.get("email").lower(), info.get("password"), users):
             if int(info.get("like")) == 1:
