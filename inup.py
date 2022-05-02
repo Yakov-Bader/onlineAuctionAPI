@@ -4,14 +4,13 @@ from flask import jsonify
 
 
 def signin(request):
-    # might need to change to form not args
-    info = request.args
+    info = request.json
     password = os.environ.get("password")
     link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
     users = db.users
-    if users.find_one({'email': info["email"].lower(), 'password': info["password"]}):
+    if users.find_one({'email': info.get("email").lower(), 'password': info.get("password")}):
         return jsonify({"status": "ok", "message": " welcome, here i need a link to the website, for render :)"})
     else:
         return jsonify({"status": "error", "message": "you dont exist, i need a link to the sign up page"})
