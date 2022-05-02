@@ -11,9 +11,9 @@ def signin(request):
     db = client.get_database('myAuctionDB')
     users = db.users
     if users.find_one({'email': info.get("email").lower(), 'password': info.get("password")}):
-        return jsonify({"status": "ok", "message": " welcome, here i need a link to the website, for render :)"})
+        return jsonify({"status": "success", "message": "always nice to see you back"})
     else:
-        return jsonify({"status": "error", "message": "you dont exist, i need a link to the sign up page"})
+        return jsonify({"status": "error", "message": "you don't exist, i need a link to the sign up page"})
 
 
 def signup(request):
@@ -34,7 +34,7 @@ def signup(request):
                 "saved": []
             }
             users.insert_one(user)
-            return jsonify({"status": "ok", "message": " welcome to {} {} ".format(info.get("name"), info.get("email").lower())})
+            return jsonify({"status": "success", "message": " welcome to {} {} ".format(info.get("name"), info.get("email").lower())})
         else:
             return jsonify({"status": "error", "message": "you already exist"})
     else:

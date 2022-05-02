@@ -24,7 +24,6 @@ def sales(request):
                 results.append(s)
         return jsonify(results)
     if flask.request.method == 'POST':
-        # might need to change to form not args
         info = request.json
         users = db.users
         if not (info.get("image") and info.get("details") and info.get("name") and info.get("price") and checkuser(info.get("admin"),
@@ -50,7 +49,7 @@ def sales(request):
             sales.insert_one(sale)
             users = db.users
             users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": sid}})
-            return jsonify({"status": "ok", "message": "you have crated a new sale"})
+            return jsonify({"status": "success", "message": "you have crated a new sale"})
         else:
             return jsonify({"status": "error", "message": "you already have a sale with this name"})
 
@@ -69,7 +68,7 @@ def bid(request):
             sales.update_one({"saleid": float(info.get("saleid"))},
                              {"$set": {"high": info.get("email").lower(), "price": float(info.get("price"))}})
             users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("saleid")}})
-            return jsonify({"status": "ok", "message": "you have updated the sale"})
+            return jsonify({"status": "success", "message": "you have updated the sale"})
         else:
             return jsonify({"status": "error", "message": "you need to bid higher"})
     else:
@@ -83,14 +82,15 @@ def like(request):
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
     users = db.users
+    # return info.get("email")
     if info.get("email") and info.get("id"):
         if checkuser(info.get("email").lower(), info.get("password"), users):
             if int(info.get("like")) == 1:
                 users.update_one({"email": info.get("email").lower()}, {"$push": {"saved": info.get("id")}})
-                return jsonify({"status": "ok", "message": "your like was successful"})
+                return jsonify({"status": "success", "message": "your like was successful"})
             else:
                 users.update_one({"email": info.get("email").lower()}, {"$pull": {"saved": info.get("id")}})
-                return jsonify({"status": "ok", "message": "your remove like was successful"})
+                return jsonify({"status": "success", "message": "your remove like was successful"})
         else:
             return jsonify({"status": "error", "message": "I don't recognize you"})
     return jsonify({"status": "error", "message": "you are missing some details"})
