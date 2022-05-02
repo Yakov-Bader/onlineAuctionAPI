@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import os
 from flask import jsonify
+from sales import checkuser
 
 
 def signin(request):
@@ -10,10 +11,10 @@ def signin(request):
     client = MongoClient(link)
     db = client.get_database('myAuctionDB')
     users = db.users
-    if users.find_one({'email': info.get("email").lower(), 'password': info.get("password")}):
+    if checkuser(info.get("email"), info.get("password"), users):
         return jsonify({"status": "success", "message": "always nice to see you back"})
     else:
-        return jsonify({"status": "error", "message": "you don't exist, i need a link to the sign up page"})
+        return jsonify({"status": "error", "message": "you don't exist, you could sign up in the sign-up page, or try again"})
 
 
 def signup(request):
@@ -39,3 +40,22 @@ def signup(request):
             return jsonify({"status": "error", "message": "you already exist"})
     else:
         return jsonify({"status": "error", "message": "you are missing some arguments"})
+
+
+def delete(request):
+    info = request.json
+    password = os.environ.get("password")
+    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
+    client = MongoClient(link)
+    db = client.get_database('myAuctionDB')
+    users = db.users
+    sales = db.sales
+    if checkuser(info.get("email"), info.get("password"), users):
+        user = users.find_one({"email": info.get("email").lower(), "password": info.get("password")})
+        for id in user["sales"]:
+                sales.delete_one({"saleid": int(id)})
+        users.delete_one({"email": info.get("email").lower(), "password": info.get("password")})
+        return jsonify({"status": "success", "message": "you deleted {} account and it's sales, you could always sign up again".format(info.get("email").lower())})
+    else:
+        return jsonify({"status": "error", "message": "the {} account does not exist".format(info.get("email").lower())})
+

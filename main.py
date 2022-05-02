@@ -1,7 +1,7 @@
 # connect to socket.io
 import flask
-from inup import signin, signup
-from sales import sales, bid, like
+from inup import *
+from sales import *
 from flask import Flask, request, render_template, jsonify
 from flask_cors import cross_origin, CORS
 
@@ -37,6 +37,11 @@ def signIn():
     return signin(request)
 
 
+@app.route('/delete', methods=['POST'])
+def Delete():
+    return delete(request)
+
+
 @app.route('/sales', methods=['GET', 'POST'])
 def Sales():
     return sales(request)
@@ -50,6 +55,10 @@ def Bid():
 @app.route('/like', methods=['POST'])
 def Like():
     return like(request)
+
+@app.route('/remove', methods=['POST'])
+def Remove():
+    return remove(request)
 
 
 if __name__ == '__main__':

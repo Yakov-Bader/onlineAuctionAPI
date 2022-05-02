@@ -74,11 +74,11 @@ def bid(request):
     users = db.users
     if checkuser(info.get("email").lower(), info.get("password"), users):
         sales = db.sales
-        sale = sales.find_one({"saleid": float(info.get("saleid"))})
+        sale = sales.find_one({"saleid": float(info.get("id"))})
         if sale["price"] < float(info.get("price")):
-            sales.update_one({"saleid": float(info.get("saleid"))},
+            sales.update_one({"saleid": float(info.get("id"))},
                              {"$set": {"high": info.get("email").lower(), "price": float(info.get("price"))}})
-            users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("saleid")}})
+            users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("id")}})
             return jsonify({"status": "success", "message": "you have updated the sale"})
         else:
             return jsonify({"status": "error", "message": "you need to bid higher"})
@@ -104,3 +104,21 @@ def like(request):
         else:
             return jsonify({"status": "error", "message": "I don't recognize you"})
     return jsonify({"status": "error", "message": "you are missing some details"})
+
+
+def remove(request):
+    info = request.json
+    password = os.environ.get("password")
+    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
+    client = MongoClient(link)
+    db = client.get_database('myAuctionDB')
+    users = db.users
+    if checkuser(info.get("email").lower(), info.get("password"), users):
+        sales = db.sales
+        if sales.find_one({"saleid": int(info.get("id"))}):
+            name = sales.find_one({"saleid": int(info.get("id"))})["name"]
+            sales.delete_one({"saleid": int(info.get("id"))})
+            return jsonify({"status": "success", "message": "you removed the sale {}".format(name)})
+        else:
+            return jsonify({"status": "error", "message": "the sale does not exist"})
+    return jsonify({"status": "error", "message": "I don't recognize you"})

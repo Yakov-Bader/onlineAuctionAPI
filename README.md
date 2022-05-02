@@ -10,10 +10,16 @@ response: `{"status": "error", "message": "you already exist, link to sign in pa
 response: `{"status": "error", "message": "you are missing some arguments"}`
 ## Sign In
 **GET** [https://onlineauctionapi.herokuapp.com/signin](https://onlineauctionapi.herokuapp.com/signin)   
-describe: this is for signing ip to the website   
-required parameters: email, password    
+describe: this is for signing ip to the website;   
+required parameters: email, password;    
 response: `{"status": "success", "message": "welcome, here i need a link to the website, for render :)"}`    
-response: `{"status": "error", "message": "you dont exist, i need a link to the sign up page, or reload to let him try again"}`
+response: `{"status": "error", "message": "you don't exist, you could sign up in the sign-up page, or try again"}`  
+## Delete account   
+**POST**  [https://onlineauctionapi.herokuapp.com/delete](https://onlineauctionapi.herokuapp.com/delete)   
+describe: delete a user account;  
+required parameters: email, password;  
+response: `{"status": "success", "message": "you deleted {} account and it's sales, you could always sign up again"}`  
+response: `{"status": "error", "message": "the {} account does not exist"}`
 ## Sales
 **GET** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)   
 describe: this is for getting the list of sales for the home page   
@@ -58,15 +64,22 @@ response: `{"status": "error", "message": "I don't recognize you"}`
 ## Bid
 **POST** [https://onlineauctionapi.herokuapp.com/bid](https://onlineauctionapi.herokuapp.com/bid)     
 describe: this is for to bid on a sale   
-required parameters: email, password, saleid, price;    
-response: `{"status": "success", "message": "you have updated the sale"}`
+required parameters: email, password, id, price;    
+response: `{"status": "success", "message": "you have updated the sale"}`  
 response: `{"status": "error", "message": "you need to bid higher"}`    
-response: `{"status": "error", "message": "I don't recognize you"}`
+response: `{"status": "error", "message": "I don't recognize you"}`  
 ## Like
 **POST** [https://onlineauctionapi.herokuapp.com/like](https://onlineauctionapi.herokuapp.com/like)    
 describe: when someone likes or unlikes a sale, it will appear or disappear from the liked list
-required email, password, id, like (0 for remove like or 1 for like);   
+required parameters: email, password, id, like (0 for remove like or 1 for like);   
 response: `{"status": "success", "message": "your remove like was successful"}`    
 response: `{"status": "success", "message": "your like was successful"}`   
 response: `{"status": "error", "message": "I don't recognize you"}`    
-response: `{"status": "error", "message": "you are missing some details"}`
+response: `{"status": "error", "message": "you are missing some details"}`  
+##Remove  
+**POST** [https://onlineauctionapi.herokuapp.com/remove](https://onlineauctionapi.herokuapp.com/remove)    
+describe: admin remove a sale
+required parameters: email, password, id, price;  
+response: `{"status": "success", "message": "you removed the sale {}"}`  
+response: `{"status": "error", "message": "the sale does not exist"}`  
+response: `{"status": "error", "message": "I don't recognize you"}`
