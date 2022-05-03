@@ -57,7 +57,7 @@ response: array of up to 10 objects of sales:
 describe: this is for a admin to post a new sale   
 required parameters: admin, password, image, details, price, name;     
 response: `{"status": "success", "message": "you have crated a new sale"}`   
-response: `{"status": "error", "message": "you are missing some details"}`
+response: `{"status": "error", "message": "you are missing some details"}`  
 response: `{"status": "error", "message": "you already have a sale with this name"}`
 response: `{"status": "error", "message": "I don't recognize you"}`
 ## Bid
