@@ -32,7 +32,7 @@ def signUp():
     return signup(request)
 
 
-@app.route('/signin')
+@app.route('/signin', methods=['POST'])
 def signIn():
     return signin(request)
 

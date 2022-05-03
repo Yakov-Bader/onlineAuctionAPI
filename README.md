@@ -9,7 +9,7 @@ response: `{"status": "success", "message": "welcome to ${name} ${email}" }`
 response: `{"status": "error", "message": "you already exist, link to sign in page" }`   
 response: `{"status": "error", "message": "you are missing some arguments"}`
 ## Sign In
-**GET** [https://onlineauctionapi.herokuapp.com/signin](https://onlineauctionapi.herokuapp.com/signin)   
+**POST** [https://onlineauctionapi.herokuapp.com/signin](https://onlineauctionapi.herokuapp.com/signin)   
 describe: this is for signing ip to the website;   
 required parameters: email, password;    
 response: `{"status": "success", "message": "welcome, here i need a link to the website, for render :)"}`    
