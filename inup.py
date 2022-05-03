@@ -12,14 +12,15 @@ def signin(request):
     db = client.get_database('myAuctionDB')
     users = db.users
     if checkuser(info.get("email"), info.get("password"), users):
-        return jsonify({"status": "success", "message": "always nice to see you back"})
+        user = users.find_one({'email': info.get("email"), 'password': info.get("password")})
+        return jsonify({"status": "success", "message": "welcome to {} {}".format(user["fname"], user["lname"]), "fname": user["fname"], "lname": user["lname"], "email": user["email"], "password": user["password"]})
     else:
         return jsonify({"status": "error", "message": "you don't exist, you could sign up in the sign-up page, or try again"})
 
 
 def signup(request):
     info = request.json
-    if info.get("password") and info.get("name") and info.get("email"):
+    if info.get("password") and info.get("fname") and info.get("lname") and info.get("email"):
         password = os.environ.get("password")
         link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
         client = MongoClient(link)
@@ -27,7 +28,8 @@ def signup(request):
         users = db.users
         if not users.find_one({'email': info.get("email").lower()}):
             user = {
-                "name": info.get("name"),
+                "fname": info.get("fname"),
+                "lname": info.get("lname"),
                 "email": info.get("email").lower(),
                 "password": info.get("password"),
                 "sales": [],
@@ -35,7 +37,7 @@ def signup(request):
                 "saved": []
             }
             users.insert_one(user)
-            return jsonify({"status": "success", "message": " welcome to {} {} ".format(info.get("name"), info.get("email").lower())})
+            return jsonify({"status": "success", "message": " welcome to {} {} ".format(info.get("fname"), info.get("lname").lower())})
         else:
             return jsonify({"status": "error", "message": "you already exist"})
     else:

@@ -19,24 +19,24 @@ def sales(request):
     db = client.get_database('myAuctionDB')
     users = db.users
     sales = db.sales
-    if checkuser(info.get("email"), info.get("password"), users):
-        if flask.request.method == 'GET':
-            results = []
-            for s in sales.find({}, {"_id": 0}).limit(10):
-                user = users.find_one({"email": info.get("email"), "password": info.get("password")})
-                s["admin"] = 0
-                s["offers"] = 0
-                s["saved"] = 0
-                if str(s["saleid"]) in user["sales"]:
-                    s["admin"] = 1
-                if str(s["saleid"]) in user["offers"]:
-                    s["offers"] = 1
-                if str(s["saleid"]) in user["saved"]:
-                    s["saved"] = 1
-                if not s["sold"]:
-                    results.append(s)
-            return jsonify(results)
-        if flask.request.method == 'POST':
+    if flask.request.method == 'GET':
+        results = []
+        for s in sales.find({}, {"_id": 0}).limit(10):
+            user = users.find_one({"email": info.get("email"), "password": info.get("password")})
+            s["admin"] = 0
+            s["offers"] = 0
+            s["saved"] = 0
+            if str(s["saleid"]) in user["sales"]:
+                s["admin"] = 1
+            if str(s["saleid"]) in user["offers"]:
+                s["offers"] = 1
+            if str(s["saleid"]) in user["saved"]:
+                s["saved"] = 1
+            if not s["sold"]:
+                results.append(s)
+        return jsonify(results)
+    if flask.request.method == 'POST':
+        if checkuser(info.get("email"), info.get("password"), users):
             if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):
                 return jsonify({"status": "error", "message": "you are missing some details"})
             if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
@@ -61,8 +61,8 @@ def sales(request):
                 return jsonify({"status": "success", "message": "you have crated a new sale"})
             else:
                 return jsonify({"status": "error", "message": "you already have a sale with this name"})
-    else:
-        return jsonify({"status": "error", "message": "I don't recognize you"})
+        else:
+            return jsonify({"status": "error", "message": "I don't recognize you"})
 
 
 def bid(request):

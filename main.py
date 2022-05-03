@@ -56,6 +56,7 @@ def Bid():
 def Like():
     return like(request)
 
+
 @app.route('/remove', methods=['POST'])
 def Remove():
     return remove(request)

@@ -4,15 +4,15 @@
 ## Sign Up
 **POST** [https://onlineauctionapi.herokuapp.com/signup](https://onlineauctionapi.herokuapp.com/signup)   
 describe: this is for signing up to the website   
-required parameters: name, email, password      
-response: `{"status": "success", "message": "welcome to ${name} ${email}" }`   
-response: `{"status": "error", "message": "you already exist, link to sign in page" }`   
+required parameters: fname, lname, email, password      
+response: `{"status": "success", "message": "welcome to ${fname} ${lname}" }`   
+response: `{"status": "error", "message": "you already exist, go to the sign in page" }`   
 response: `{"status": "error", "message": "you are missing some arguments"}`
 ## Sign In
 **POST** [https://onlineauctionapi.herokuapp.com/signin](https://onlineauctionapi.herokuapp.com/signin)   
 describe: this is for signing ip to the website;   
 required parameters: email, password;    
-response: `{"status": "success", "message": "welcome, here i need a link to the website, for render :)"}`    
+response: `{"status": "success", "message": "welcome to {} {}", "fname": user["fname"], "lname": user["lname"], "email": user["email"], "password": user["password"]}`    
 response: `{"status": "error", "message": "you don't exist, you could sign up in the sign-up page, or try again"}`  
 ## Delete account   
 **POST**  [https://onlineauctionapi.herokuapp.com/delete](https://onlineauctionapi.herokuapp.com/delete)   
@@ -23,8 +23,7 @@ response: `{"status": "error", "message": "the {} account does not exist"}`
 ## Sales
 **GET** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)   
 describe: this is for getting the list of sales for the home page   
-required parameters: email, password;   
-response: `{"status": "error", "message": "I don't recognize you"}`  
+no required parameters  
 response: array of up to 10 objects of sales:
 ```
 [{      "saleid": "saleid",
