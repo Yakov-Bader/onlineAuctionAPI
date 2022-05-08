@@ -34,7 +34,8 @@ def sales(request):
                 s["saved"] = 1
             if not s["sold"]:
                 results.append(s)
-        return jsonify(results)
+        response = {"status": "success", "message": results}
+        return jsonify(response)
     if flask.request.method == 'POST':
         if checkuser(info.get("email"), info.get("password"), users):
             if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):

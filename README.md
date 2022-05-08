@@ -26,7 +26,7 @@ describe: this is for getting the list of sales for the home page
 no required parameters  
 response: array of up to 10 objects of sales:
 ```
-[{      "saleid": "saleid",
+{"status": "success", "message": [{      "saleid": "saleid",
         "admin": "admin email",
         "chat": "the chat id",
         "details": "it is good ", 
@@ -81,4 +81,67 @@ describe: admin remove a sale
 required parameters: email, password, id, price;  
 response: `{"status": "success", "message": "you removed the sale {}"}`  
 response: `{"status": "error", "message": "the sale does not exist"}`  
-response: `{"status": "error", "message": "I don't recognize you"}`
+response: `{"status": "error", "message": "I don't recognize you"}`  
+##my sales  
+**POST** [https://onlineauctionapi.herokuapp.com/mysales](https://onlineauctionapi.herokuapp.com/mysales)    
+dscribe: get users sales that he created;   
+required parameters: email, password;  
+response: `{"status": "error", "message": "I don't recognize you"}`   
+response: this is an array of his sales
+```
+{"status": "success", "message": [
+        {
+            "admin": "chaimsh1@gmail.com",
+            "chat": "chat id",
+            "details": "sdfghjk",
+            "high": "no one gave a bid yet",
+            "image": "sdfghj",
+            "name": "sdfgh",
+            "price": 300.0,
+            "saleid": 9,
+            "sold": false
+        }
+    ]}
+```
+##my saved  
+**POST** [https://onlineauctionapi.herokuapp.com/mysaved](https://onlineauctionapi.herokuapp.com/mysaved)    
+dscribe: get users saved (liked) sales;   
+required parameters: email, password;  
+response: `{"status": "error", "message": "I don't recognize you"}`   
+response: this is an array of his saved sales
+```
+{"status": "success", "message": [
+        {
+            "admin": "chaimsh1@gmail.com",
+            "chat": "chat id",
+            "details": "sdfghjk",
+            "high": "no one gave a bid yet",
+            "image": "sdfghj",
+            "name": "sdfgh",
+            "price": 300.0,
+            "saleid": 9,
+            "sold": false
+        }
+    ]}
+```
+##my offers 
+**POST** [https://onlineauctionapi.herokuapp.com/myoffers](https://onlineauctionapi.herokuapp.com/myoffers)    
+dscribe: get users sales that he put in an offer (bid);   
+required parameters: email, password;  
+response: `{"status": "error", "message": "I don't recognize you"}`   
+response: this is an array of his offered sales
+```
+{"status": "success", "message": [
+        {
+            "admin": "chaimsh1@gmail.com",
+            "chat": "chat id",
+            "details": "sdfghjk",
+            "high": "no one gave a bid yet",
+            "image": "sdfghj",
+            "name": "sdfgh",
+            "price": 300.0,
+            "saleid": 9,
+            "sold": false
+        }
+    ]}
+```

@@ -1,6 +1,7 @@
 # connect to socket.io
 import flask
 from inup import *
+from my import *
 from sales import *
 from flask import Flask, request, render_template, jsonify
 from flask_cors import cross_origin, CORS
@@ -60,6 +61,21 @@ def Like():
 @app.route('/remove', methods=['POST'])
 def Remove():
     return remove(request)
+
+
+@app.route('/mysales', methods=['POST'])
+def MySales():
+    return mySales(request)
+
+
+@app.route('/mysaved', methods=['POST'])
+def MySaved():
+    return mySaved(request)
+
+
+@app.route('/myoffers', methods=['POST'])
+def MyOffers():
+    return myOffers(request)
 
 
 if __name__ == '__main__':
