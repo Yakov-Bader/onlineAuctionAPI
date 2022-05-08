@@ -82,7 +82,7 @@ required parameters: email, password, id, price;
 response: `{"status": "success", "message": "you removed the sale {}"}`  
 response: `{"status": "error", "message": "the sale does not exist"}`  
 response: `{"status": "error", "message": "I don't recognize you"}`  
-##my sales  
+## my sales  
 **POST** [https://onlineauctionapi.herokuapp.com/mysales](https://onlineauctionapi.herokuapp.com/mysales)    
 dscribe: get users sales that he created;   
 required parameters: email, password;  
@@ -103,7 +103,7 @@ response: this is an array of his sales
         }
     ]}
 ```  
-##my saved  
+## my saved  
 **POST** [https://onlineauctionapi.herokuapp.com/mysaved](https://onlineauctionapi.herokuapp.com/mysaved)    
 dscribe: get users saved (liked) sales;   
 required parameters: email, password;  
@@ -124,7 +124,7 @@ response: this is an array of his saved sales
         }
     ]}
 ```  
-##my offers   
+## my offers   
 **POST** [https://onlineauctionapi.herokuapp.com/myoffers](https://onlineauctionapi.herokuapp.com/myoffers)    
 dscribe: get users sales that he put in an offer (bid);   
 required parameters: email, password;  
