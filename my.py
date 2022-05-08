@@ -17,6 +17,8 @@ def mySales(request):
         mysales = []
         user = users.find_one({'email': info.get("email"), 'password': info.get("password")})
         mysalesid=user["sales"]
+        if not mysalesid:
+            return jsonify({"status": "error", "message": "you did not create a sale yet"})
         for id in mysalesid:
             sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
             mysales.append(sale)
@@ -38,6 +40,8 @@ def mySaved(request):
         mysaved = []
         user = users.find_one({'email': info.get("email"), 'password': info.get("password")})
         mysavedid = user["saved"]
+        if not mysavedid:
+            return jsonify({"status": "error", "message": "you have no saved sales"})
         for id in mysavedid:
             sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
             mysaved.append(sale)
@@ -59,6 +63,8 @@ def myOffers(request):
         myoffers = []
         user = users.find_one({'email': info.get("email"), 'password': info.get("password")})
         myoffersid = user["offers"]
+        if not myoffersid:
+            return jsonify({"status": "error", "message": "you did not bid on a sale yet"})
         for id in myoffersid:
             sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
             myoffers.append(sale)

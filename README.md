@@ -89,6 +89,7 @@ response: `{"status": "error", "message": "I don't recognize you"}`
 **POST** [https://onlineauctionapi.herokuapp.com/mysales](https://onlineauctionapi.herokuapp.com/mysales)    
 dscribe: get users sales that he created;   
 required parameters: email, password;  
+response: `{"status": "error", "message": "you did not create a sale yet"}`  
 response: `{"status": "error", "message": "I don't recognize you"}`   
 response: this is an array of his sales
 ```
@@ -111,6 +112,7 @@ response: this is an array of his sales
 **POST** [https://onlineauctionapi.herokuapp.com/mysaved](https://onlineauctionapi.herokuapp.com/mysaved)    
 dscribe: get users saved (liked) sales;   
 required parameters: email, password;  
+response: `{"status": "error", "message": "you have no saved sales"}`  
 response: `{"status": "error", "message": "I don't recognize you"}`   
 response: this is an array of his saved sales
 ```
@@ -132,8 +134,9 @@ response: this is an array of his saved sales
 ## my offers   
 **POST** [https://onlineauctionapi.herokuapp.com/myoffers](https://onlineauctionapi.herokuapp.com/myoffers)    
 dscribe: get users sales that he put in an offer (bid);   
-required parameters: email, password;  
-response: `{"status": "error", "message": "I don't recognize you"}`   
+required parameters: email, password;    
+response: `{"status": "error", "message": "you did not bid on a sale yet"}`    
+response: `{"status": "error", "message": "I don't recognize you"}`     
 response: this is an array of his offered sales
 ```
 {"status": "success",
