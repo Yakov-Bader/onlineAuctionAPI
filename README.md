@@ -26,32 +26,35 @@ describe: this is for getting the list of sales for the home page
 no required parameters  
 response: array of up to 10 objects of sales:
 ```
-{"status": "success", "message": [{      "saleid": "saleid",
-        "admin": "admin email",
-        "chat": "the chat id",
-        "details": "it is good ", 
-        "high": "buyer mail",
-        "image": "link to a image",
-        "name": "sale name",
-        "price": "20202",   
-        "sold": true,
-        "admin":1,
-        "offers: 0,
-        "saved":0
+{"status": "success",
+ "message": [{ 
+            "saleid": "saleid",
+            "admin": "admin email",
+            "chat": "the chat id",
+            "details": "it is good ", 
+            "high": "buyer mail",
+            "image": "link to a image",
+            "name": "sale name",
+            "price": "20202",   
+            "sold": true,
+            "admin":1,
+            "offers: 0,
+            "saved":0
         }, 
         { 
-        "saleid": "saleid",
-        "admin": "admin email",
-        "chat": "the chat id",
-        "details": "it is good ", 
-        "high": "buyer mail",
-        "image": "link to a image",
-        "name": "sale name",
-        "price": "20202", 
-        "admin":0,
-        "offers: 1,
-        "saved":1, 
-        "sold": true } ]
+            "saleid": "saleid",
+            "admin": "admin email",
+            "chat": "the chat id",
+            "details": "it is good ", 
+            "high": "buyer mail",
+            "image": "link to a image",
+            "name": "sale name",
+            "price": "20202", 
+            "admin":0,
+            "offers: 1,
+            "saved":1, 
+            "sold": true 
+        } ]
 ```
 **POST** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)    
 describe: this is for a admin to post a new sale   
@@ -89,7 +92,8 @@ required parameters: email, password;
 response: `{"status": "error", "message": "I don't recognize you"}`   
 response: this is an array of his sales
 ```
-{"status": "success", "message": [
+{"status": "success",
+ "message": [
         {
             "admin": "chaimsh1@gmail.com",
             "chat": "chat id",
@@ -110,7 +114,8 @@ required parameters: email, password;
 response: `{"status": "error", "message": "I don't recognize you"}`   
 response: this is an array of his saved sales
 ```
-{"status": "success", "message": [
+{"status": "success",
+ "message": [
         {
             "admin": "chaimsh1@gmail.com",
             "chat": "chat id",
@@ -131,7 +136,8 @@ required parameters: email, password;
 response: `{"status": "error", "message": "I don't recognize you"}`   
 response: this is an array of his offered sales
 ```
-{"status": "success", "message": [
+{"status": "success",
+ "message": [
         {
             "admin": "chaimsh1@gmail.com",
             "chat": "chat id",
