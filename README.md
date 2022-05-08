@@ -102,7 +102,7 @@ response: this is an array of his sales
             "sold": false
         }
     ]}
-```
+```  
 ##my saved  
 **POST** [https://onlineauctionapi.herokuapp.com/mysaved](https://onlineauctionapi.herokuapp.com/mysaved)    
 dscribe: get users saved (liked) sales;   
@@ -123,8 +123,8 @@ response: this is an array of his saved sales
             "sold": false
         }
     ]}
-```
-##my offers 
+```  
+##my offers   
 **POST** [https://onlineauctionapi.herokuapp.com/myoffers](https://onlineauctionapi.herokuapp.com/myoffers)    
 dscribe: get users sales that he put in an offer (bid);   
 required parameters: email, password;  
