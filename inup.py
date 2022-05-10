@@ -1,15 +1,10 @@
-from pymongo import MongoClient
-import os
 from flask import jsonify
-from sales import checkuser
+from funcs import checkuser, connect
 
 
 def signin(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     if checkuser(info.get("email"), info.get("password"), users):
         user = users.find_one({'email': info.get("email"), 'password': info.get("password")})
@@ -21,10 +16,7 @@ def signin(request):
 def signup(request):
     info = request.json
     if info.get("password") and info.get("fname") and info.get("lname") and info.get("email"):
-        password = os.environ.get("password")
-        link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-        client = MongoClient(link)
-        db = client.get_database('myAuctionDB')
+        db = connect()
         users = db.users
         if not users.find_one({'email': info.get("email").lower()}):
             user = {
@@ -46,10 +38,7 @@ def signup(request):
 
 def delete(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):

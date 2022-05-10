@@ -1,11 +1,9 @@
 # connect to socket.io
-import flask
 from inup import *
 from my import *
 from sales import *
 from flask import Flask, request, render_template, jsonify
 from flask_cors import cross_origin, CORS
-
 from pip._internal.vcs import git
 import git
 

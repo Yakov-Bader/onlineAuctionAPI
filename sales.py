@@ -1,22 +1,11 @@
 import flask
-from pymongo import MongoClient
-import os
 from flask import jsonify
-
-
-def checkuser(email, password, users):
-    if email and password:
-        return users.find_one({'email': email.lower(), 'password': password})
-    else:
-        return False
+from funcs import checkuser, connect
 
 
 def sales(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     sales = db.sales
     if flask.request.method == 'GET':
@@ -68,10 +57,7 @@ def sales(request):
 
 def bid(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     if checkuser(info.get("email").lower(), info.get("password"), users):
         sales = db.sales
@@ -89,10 +75,7 @@ def bid(request):
 
 def like(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     if info.get("email") and info.get("id"):
         if checkuser(info.get("email").lower(), info.get("password"), users):
@@ -109,10 +92,7 @@ def like(request):
 
 def remove(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     if checkuser(info.get("email").lower(), info.get("password"), users):
         sales = db.sales

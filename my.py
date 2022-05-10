@@ -1,16 +1,10 @@
-import flask
-from pymongo import MongoClient
-import os
 from flask import jsonify
-from sales import checkuser
+from funcs import checkuser, connect
 
 
 def mySales(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
@@ -30,10 +24,7 @@ def mySales(request):
 
 def mySaved(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
@@ -53,10 +44,7 @@ def mySaved(request):
 
 def myOffers(request):
     info = request.json
-    password = os.environ.get("password")
-    link = 'mongodb+srv://yakov:' + password + '@cluster0.irzzw.mongodb.net/myAuctionDB?retryWrites=true&w=majority'
-    client = MongoClient(link)
-    db = client.get_database('myAuctionDB')
+    db = connect()
     users = db.users
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
