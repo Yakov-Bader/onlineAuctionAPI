@@ -12,7 +12,15 @@ response: `{"status": "error", "message": "you are missing some arguments"}`
 **POST** [https://onlineauctionapi.herokuapp.com/signin](https://onlineauctionapi.herokuapp.com/signin)   
 describe: this is for signing ip to the website;   
 required parameters: email, password;    
-response: `{"status": "success", "message": "welcome to {} {}", "fname": "fisrt name", "lname": "last name", "email": "email", "password": "password"}`    
+response: 
+```
+{"status": "success", 
+"message": "welcome to {} {}", 
+"fname": "fisrt name", 
+"lname": "last name", 
+"email": "email", 
+"password": "password"}
+```    
 response: `{"status": "error", "message": "you don't exist, you could sign up in the sign-up page, or try again"}`  
 ## Delete account   
 **POST**  [https://onlineauctionapi.herokuapp.com/delete](https://onlineauctionapi.herokuapp.com/delete)   

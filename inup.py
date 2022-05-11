@@ -8,9 +8,9 @@ def signin(request):
     users = db.users
     if checkuser(info.get("email"), info.get("password"), users):
         user = users.find_one({'email': info.get("email"), 'password': info.get("password")})
-        return jsonify({"status": "success", "message": "welcome to {} {}".format(user["fname"], user["lname"]), "fname": user["fname"], "lname": user["lname"], "email": user["email"], "password": user["password"]})
+        return jsonify({"status": "success", "message": "Welcome to {} {}.".format(user["fname"], user["lname"]), "fname": user["fname"], "lname": user["lname"], "email": user["email"], "password": user["password"]})
     else:
-        return jsonify({"status": "error", "message": "you don't exist, you could sign up in the sign-up page, or try again"})
+        return jsonify({"status": "error", "message": "Your username or password are incorrect."})
 
 
 def signup(request):
