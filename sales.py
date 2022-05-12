@@ -102,12 +102,13 @@ def remove(request):
     info = request.json
     db = connect()
     users = db.users
-    if checkuser(info.get("email").lower(), info.get("password"), users):
+    if users.find_one({'email': info.get("email").lower(), 'password': info.get("password"), 'sales': int(info.get("id"))}):
         sales = db.sales
         if sales.find_one({"saleid": int(info.get("id"))}):
+
             name = sales.find_one({"saleid": int(info.get("id"))})["name"]
             sales.delete_one({"saleid": int(info.get("id"))})
             return jsonify({"status": "success", "message": "you removed the sale {}".format(name)})
         else:
             return jsonify({"status": "error", "message": "the sale does not exist"})
-    return jsonify({"status": "error", "message": "I don't recognize you"})
+    return jsonify({"status": "error", "message": "you are not the admin of this sale"})
