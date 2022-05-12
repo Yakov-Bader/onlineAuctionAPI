@@ -10,7 +10,7 @@ def sales(request):
     sales = db.sales
     if flask.request.method == 'GET':
         results = []
-        for s in sales.find({}, {"_id": 0}).limit(10):
+        for s in sales.find({}, {"_id": 0}).limit(9):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
             s["admin"] = 0
             s["offers"] = 0

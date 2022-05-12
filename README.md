@@ -32,7 +32,7 @@ response: `{"status": "error", "message": "the {} account does not exist"}`
 **GET** [https://onlineauctionapi.herokuapp.com/sales](https://onlineauctionapi.herokuapp.com/sales)   
 describe: this is for getting the list of sales for the home page   
 no required parameters  
-response: array of up to 10 objects of sales:
+response: array of up to 9 objects of sales:
 ```
 {"status": "success",
  "message": [{ 
