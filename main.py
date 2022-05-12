@@ -41,9 +41,14 @@ def Delete():
     return delete(request)
 
 
-@app.route('/sales', methods=['GET', 'POST'])
+@app.route('/sales', methods=['POST'])
 def Sales():
     return sales(request)
+
+
+@app.route('/getsales', methods=['POST'])
+def GetSales():
+    return getsales(request)
 
 
 @app.route('/bid', methods=['POST'])

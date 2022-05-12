@@ -3,12 +3,12 @@ from flask import jsonify
 from funcs import checkuser, connect
 
 
-def sales(request):
+def getsales(request):
     info = request.json
     db = connect()
     users = db.users
     sales = db.sales
-    if flask.request.method == 'GET':
+    if checkuser(info.get("email"), info.get("password"), users):
         results = []
         for s in sales.find({}, {"_id": 0}).limit(9):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
@@ -25,34 +25,42 @@ def sales(request):
                 results.append(s)
         response = {"status": "success", "message": results}
         return jsonify(response)
-    if flask.request.method == 'POST':
-        if checkuser(info.get("email"), info.get("password"), users):
-            if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):
-                return jsonify({"status": "error", "message": "you are missing some details"})
-            if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
-                saleid = db.id
-                sid = saleid.find_one({})
-                sid = sid["saleid"]
-                saleid.update_one({"saleid": sid}, {"$set": {"saleid": sid + 1}})
-                sale = {
-                    "saleid": sid,
-                    "admin": info.get("admin").lower(),
-                    "chat": "chat id",
-                    "image": info.get("image"),
-                    "details": info.get("details"),
-                    "high": "no one gave a bid yet",
-                    "name": info.get("name"),
-                    "price": float(info.get("price")),
-                    "sold": False
-                }
-                sales.insert_one(sale)
-                users = db.users
-                users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": sid}})
-                return jsonify({"status": "success", "message": "you have crated a new sale"})
-            else:
-                return jsonify({"status": "error", "message": "you already have a sale with this name"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})
+
+
+def sales(request):
+    info = request.json
+    db = connect()
+    users = db.users
+    sales = db.sales
+    if checkuser(info.get("email"), info.get("password"), users):
+        if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):
+            return jsonify({"status": "error", "message": "you are missing some details"})
+        if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
+            saleid = db.id
+            sid = saleid.find_one({})
+            sid = sid["saleid"]
+            saleid.update_one({"saleid": sid}, {"$set": {"saleid": sid + 1}})
+            sale = {
+                "saleid": sid,
+                "admin": info.get("admin").lower(),
+                "chat": "chat id",
+                "image": info.get("image"),
+                "details": info.get("details"),
+                "high": "no one gave a bid yet",
+                "name": info.get("name"),
+                "price": float(info.get("price")),
+                "sold": False
+            }
+            sales.insert_one(sale)
+            users = db.users
+            users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": sid}})
+            return jsonify({"status": "success", "message": "you have crated a new sale"})
         else:
-            return jsonify({"status": "error", "message": "I don't recognize you"})
+            return jsonify({"status": "error", "message": "you already have a sale with this name"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})
 
 
 def bid(request):
