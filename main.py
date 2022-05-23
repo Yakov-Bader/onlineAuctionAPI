@@ -13,6 +13,7 @@ from flask_socketio import SocketIO, send, emit
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
+CORS(socketio)
 
 
 @app.route('/git_update', methods=['POST'])
