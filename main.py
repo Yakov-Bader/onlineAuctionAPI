@@ -1,4 +1,5 @@
-# connect to socket.io
+import os
+
 from inup import *
 from my import *
 from sales import *
@@ -6,9 +7,12 @@ from flask import Flask, request, render_template, jsonify
 from flask_cors import cross_origin, CORS
 from pip._internal.vcs import git
 import git
+from flask_socketio import SocketIO, send, emit
+
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 @app.route('/git_update', methods=['POST'])
@@ -81,5 +85,17 @@ def MyOffers():
     return myOffers(request)
 
 
+@socketio.on('send')
+def handleMessage(msg):
+    print(msg['message'])
+    emit('message', msg, broadcast=True)
+
+
+@socketio.on('connect')
+def connect():
+    sid = "sdfgm"
+    print('connected ' + sid)
+
+
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    socketio.run(app, host='localhost', port=5000, debug=True)
