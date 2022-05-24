@@ -93,6 +93,7 @@ def handleMessage(msg):
 
 @socketio.on('connect')
 def connect():
+    emit('message', "sdfghjkgfdgh", broadcast=True)
     sid = "sdfgm"
     print('connected ' + sid)
 
