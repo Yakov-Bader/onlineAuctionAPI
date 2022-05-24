@@ -144,7 +144,8 @@ response: this is an array of his saved sales
 ## my offers   
 **POST** [https://onlineauctionapi.herokuapp.com/myoffers](https://onlineauctionapi.herokuapp.com/myoffers)    
 dscribe: get users sales that he put in an offer (bid);   
-required parameters: email, password, amount;    
+required parameters: email, password, amount;   
+response:`{"status": "error", "message": "you need to give a valid number"}`    
 response: `{"status": "error", "message": "you did not bid on a sale yet"}`    
 response: `{"status": "error", "message": "I don't recognize you"}`     
 response: this is an array of his offered sales

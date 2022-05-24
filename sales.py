@@ -11,7 +11,7 @@ def getsales(request):
     if checkuser(info.get("email"), info.get("password"), users):
         results = []
         if not isinstance(info.get("amount"), int):
-            return jsonify({"status": "error", "message": "cant give you that amount of sales, make sure that you are sending a number"})
+            return jsonify({"status": "error", "message": "you need to give a valid number"})
         for s in sales.find({}, {"_id": 0}).limit(int(info.get("amount"))):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
             s["admin"] = 0
