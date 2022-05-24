@@ -10,7 +10,7 @@ def getsales(request):
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
         results = []
-        for s in sales.find({}, {"_id": 0}).limit(9):
+        for s in sales.find({}, {"_id": 0}).limit(info.get("amount")):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
             s["admin"] = 0
             s["offers"] = 0
