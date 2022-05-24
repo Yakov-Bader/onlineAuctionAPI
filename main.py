@@ -1,5 +1,5 @@
 import os
-
+# web: gunicorn --worker-class eventlet -w 1 app:app
 from inup import *
 from my import *
 from sales import *
