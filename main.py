@@ -1,5 +1,5 @@
 import os
-# web: gunicorn main:app
+
 from inup import *
 from my import *
 from sales import *
@@ -11,7 +11,7 @@ from flask_socketio import SocketIO, send, emit
 
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+# cors = CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
