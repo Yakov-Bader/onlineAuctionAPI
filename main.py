@@ -91,7 +91,7 @@ def handleMessage(msg):
     emit('message', msg, broadcast=True)
 
 
-@socketio.on('connect')
+@socketio.on('connect', namespace="/api")
 @cross_origin()
 def connect():
     sid = "sdfgm"
