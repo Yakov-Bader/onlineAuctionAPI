@@ -10,7 +10,7 @@ def getsales(request):
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
         results = []
-        if not isinstance(info.get("amount"), int):
+        if not info.get("amount").isnumeric():
             return jsonify({"status": "error", "message": "you need to give a valid number"})
         for s in sales.find({}, {"_id": 0}).limit(int(info.get("amount"))):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})

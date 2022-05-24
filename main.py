@@ -1,5 +1,5 @@
 import os
-# web: gunicorn --worker-class eventlet -w 1 app:app
+# web: gunicorn main:app
 from inup import *
 from my import *
 from sales import *
@@ -11,8 +11,8 @@ from flask_socketio import SocketIO, send, emit
 
 
 app = Flask(__name__)
-CORS(app)
-#socketio = SocketIO(app, cors_allowed_origins='*')
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins='*')
 
 
 @app.route('/git_update', methods=['POST'])
@@ -98,5 +98,5 @@ def connect():
 
 
 if __name__ == '__main__':
-    # socketio.run(app, host='localhost', port=5000, debug=True)
-    app.run(host='localhost', port=5000, debug=True)
+    socketio.run(app, host='localhost', port=5000, debug=True)
+    # app.run(host='localhost', port=5000, debug=True)

@@ -31,8 +31,9 @@ response: `{"status": "error", "message": "the {} account does not exist"}`
 ## Get Sales  
 **POST** [https://onlineauctionapi.herokuapp.com/getsales](https://onlineauctionapi.herokuapp.com/getsales)   
 describe: this is for getting the list of sales for the home page   
-required parameters: email, password; 
+required parameters: email, password, amount;   
 response: `{"status": "error", "message": "I don't recognize you"}`  
+response:`{"status": "error", "message": "you need to give a valid amount number"}`    
 response: array of up to 9 objects of sales:
 ```
 {"status": "success",
@@ -144,8 +145,7 @@ response: this is an array of his saved sales
 ## my offers   
 **POST** [https://onlineauctionapi.herokuapp.com/myoffers](https://onlineauctionapi.herokuapp.com/myoffers)    
 dscribe: get users sales that he put in an offer (bid);   
-required parameters: email, password, amount;   
-response:`{"status": "error", "message": "you need to give a valid number"}`    
+required parameters: email, password;  
 response: `{"status": "error", "message": "you did not bid on a sale yet"}`    
 response: `{"status": "error", "message": "I don't recognize you"}`     
 response: this is an array of his offered sales
