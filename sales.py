@@ -36,7 +36,7 @@ def sales(request):
     db = connect()
     users = db.users
     sales = db.sales
-    if checkuser(info.get("email"), info.get("password"), users):
+    if checkuser(info.get("admin"), info.get("password"), users):
         if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):
             return jsonify({"status": "error", "message": "you are missing some details"})
         if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
