@@ -165,3 +165,5 @@ response: this is an array of his offered sales
         }
     ]}
 ```
+## socket io
+the link to connect to the socket is [https://onlineauctionapi.herokuapp.com/](https://onlineauctionapi.herokuapp.com/) the socket does not completely work yet
