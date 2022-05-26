@@ -3,12 +3,12 @@ import os
 from inup import *
 from my import *
 from sales import *
+from chat import *
 from flask import Flask, request, render_template, jsonify
 from flask_cors import cross_origin, CORS
 from pip._internal.vcs import git
 import git
-from flask_socketio import SocketIO, send, emit
-
+from flask_socketio import *
 
 app = Flask(__name__)
 CORS(app)
@@ -86,16 +86,18 @@ def MyOffers():
 
 
 @socketio.on('send')
-def handleMessage(msg):
-    print(msg['message'])
-    emit('message', msg, broadcast=True)
+def on_send(data):
+    send(data)
 
 
-@socketio.on('connect')
-def connect():
-    emit('message', "sdfghjkgfdgh", broadcast=True)
-    sid = "sdfgm"
-    print('connected ' + sid)
+@socketio.on('join')
+def on_join(data):
+    join(data)
+
+
+@socketio.on('leave')
+def on_leave(data):
+    leave(data)
 
 
 if __name__ == '__main__':

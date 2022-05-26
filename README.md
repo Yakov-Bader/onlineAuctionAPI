@@ -34,7 +34,7 @@ describe: this is for getting the list of sales for the home page
 required parameters: email, password, amount;   
 response: `{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "error", "message": "you need to give a valid amount number"}`    
-response: array of up to 9 objects of sales:
+response: array of up to "amount" objects of sales:
 ```
 {"status": "success",
  "message": [{ 
