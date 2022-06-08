@@ -108,7 +108,6 @@ def remove(request):
     if users.find_one({'email': info.get("email").lower(), 'password': info.get("password"), 'sales': int(info.get("id"))}):
         sales = db.sales
         if sales.find_one({"saleid": int(info.get("id"))}):
-
             name = sales.find_one({"saleid": int(info.get("id"))})["name"]
             sales.delete_one({"saleid": int(info.get("id"))})
             return jsonify({"status": "success", "message": "you removed the sale {}".format(name)})
