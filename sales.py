@@ -89,7 +89,7 @@ def like(request):
     users = db.users
     if info.get("email") and info.get("id"):
         if checkuser(info.get("email").lower(), info.get("password"), users):
-            if int(info.get("like")) == 1:
+            if int(info.get("like")):
                 users.update_one({"email": info.get("email").lower()}, {"$push": {"saved": info.get("id")}})
                 return jsonify({"status": "success", "message": "your like was successful"})
             else:
