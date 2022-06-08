@@ -60,8 +60,8 @@ response: array of up to "amount" objects of sales:
             "image": "link to a image",
             "name": "sale name",
             "price": "20202", 
-            "admin":0,
-            "offers: ture,
+            "admin":false,
+            "offers: true,
             "saved":true, 
             "sold": true 
         } ]
@@ -84,7 +84,7 @@ response: `{"status": "error", "message": "I don't recognize you"}`
 ## Like
 **POST** [https://onlineauctionapi.herokuapp.com/like](https://onlineauctionapi.herokuapp.com/like)    
 describe: when someone likes or unlikes a sale, it will appear or disappear from the liked list
-required parameters: email, password, id, like (0 for remove like or 1 for like);   
+required parameters: email, password, id, like (false for remove like or true for like);   
 response: `{"status": "success", "message": "your remove like was successful"}`    
 response: `{"status": "success", "message": "your like was successful"}`   
 response: `{"status": "error", "message": "I don't recognize you"}`    

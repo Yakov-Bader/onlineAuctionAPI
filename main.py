@@ -102,4 +102,4 @@ def on_leave(data):
 
 if __name__ == '__main__':
     socketio.run(app, host='localhost', port=5000, debug=True)
-    #app.run(host='localhost', port=5000, debug=True)
+    #app.run(host='localhost', port=5000, debug=True) for local run
