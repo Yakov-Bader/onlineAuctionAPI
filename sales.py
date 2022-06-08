@@ -14,15 +14,16 @@ def getsales(request):
             return jsonify({"status": "error", "message": "you need to give a valid number"})
         for s in sales.find({}, {"_id": 0}).limit(int(info.get("amount"))):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
-            s["admin"] = 0
-            s["offers"] = 0
-            s["saved"] = 0
-            if str(s["saleid"]) in user["sales"]:
-                s["admin"] = 1
+            s["admin"] = False
+            s["offers"] = False
+            s["saved"] = False
+            print(user["sales"])
+            if s["saleid"] in user["sales"]:
+                s["admin"] = True
             if str(s["saleid"]) in user["offers"]:
-                s["offers"] = 1
+                s["offers"] = True
             if str(s["saleid"]) in user["saved"]:
-                s["saved"] = 1
+                s["saved"] = True
             if not s["sold"]:
                 results.append(s)
         response = {"status": "success", "message": results}
