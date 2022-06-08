@@ -47,9 +47,9 @@ response: array of up to "amount" objects of sales:
             "name": "sale name",
             "price": "20202",   
             "sold": true,
-            "admin":1,
-            "offers: 0,
-            "saved":0
+            "admin":true,
+            "offers: false,
+            "saved":false
         }, 
         { 
             "saleid": "saleid",
@@ -61,8 +61,8 @@ response: array of up to "amount" objects of sales:
             "name": "sale name",
             "price": "20202", 
             "admin":0,
-            "offers: 1,
-            "saved":1, 
+            "offers: ture,
+            "saved":true, 
             "sold": true 
         } ]
 ```

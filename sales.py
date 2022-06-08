@@ -20,9 +20,9 @@ def getsales(request):
             print(user["sales"])
             if s["saleid"] in user["sales"]:
                 s["admin"] = True
-            if str(s["saleid"]) in user["offers"]:
+            if s["saleid"] in user["offers"]:
                 s["offers"] = True
-            if str(s["saleid"]) in user["saved"]:
+            if s["saleid"] in user["saved"]:
                 s["saved"] = True
             if not s["sold"]:
                 results.append(s)
