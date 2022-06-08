@@ -24,6 +24,7 @@ def getsales(request):
             if str(s["saleid"]) in user["saved"]:
                 s["saved"] = 1
             if not s["sold"]:
+                del s["sold"]
                 results.append(s)
         response = {"status": "success", "message": results}
         return jsonify(response)
