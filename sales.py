@@ -10,9 +10,9 @@ def getsales(request):
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
         results = []
-        if not info.get("amount").isnumeric():
+        if not str(info.get("amount")).isnumeric():
             return jsonify({"status": "error", "message": "you need to give a valid number"})
-        for s in sales.find({}, {"_id": 0}).limit(int(info.get("amount"))):
+        for s in sales.find({}, {"_id": 0}).limit(info.get("amount")):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
             s["admin"] = False
             s["offers"] = False
@@ -90,7 +90,7 @@ def like(request):
     users = db.users
     if info.get("email") and info.get("id"):
         if checkuser(info.get("email").lower(), info.get("password"), users):
-            if int(info.get("like")):
+            if info.get("like"):
                 users.update_one({"email": info.get("email").lower()}, {"$push": {"saved": info.get("id")}})
                 return jsonify({"status": "success", "message": "your like was successful"})
             else:

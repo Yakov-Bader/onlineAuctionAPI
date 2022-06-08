@@ -106,15 +106,18 @@ response: this is an array of his sales
 {"status": "success",
  "message": [
         {
-            "admin": "chaimsh1@gmail.com",
-            "chat": "chat id",
-            "details": "sdfghjk",
-            "high": "no one gave a bid yet",
-            "image": "sdfghj",
-            "name": "sdfgh",
-            "price": 300.0,
-            "saleid": 9,
-            "sold": false
+            "saleid": "saleid",
+            "admin": "admin email",
+            "chat": "the chat id",
+            "details": "it is good ", 
+            "high": "buyer mail",
+            "image": "link to a image",
+            "name": "sale name",
+            "price": "20202", 
+            "isadmin":true,
+            "offers: false,
+            "saved":true,
+            "sold":false
         }
     ]}
 ```  
@@ -129,15 +132,18 @@ response: this is an array of his saved sales
 {"status": "success",
  "message": [
         {
-            "admin": "chaimsh1@gmail.com",
-            "chat": "chat id",
-            "details": "sdfghjk",
-            "high": "no one gave a bid yet",
-            "image": "sdfghj",
-            "name": "sdfgh",
-            "price": 300.0,
-            "saleid": 9,
-            "sold": false
+            "saleid": "saleid",
+            "admin": "admin email",
+            "chat": "the chat id",
+            "details": "it is good ", 
+            "high": "buyer mail",
+            "image": "link to a image",
+            "name": "sale name",
+            "price": "20202", 
+            "isadmin":false,
+            "offers: true,
+            "saved":true,
+            "sold":true
         }
     ]}
 ```  
@@ -152,15 +158,18 @@ response: this is an array of his offered sales
 {"status": "success",
  "message": [
         {
-            "admin": "chaimsh1@gmail.com",
-            "chat": "chat id",
-            "details": "sdfghjk",
-            "high": "no one gave a bid yet",
-            "image": "sdfghj",
-            "name": "sdfgh",
-            "price": 300.0,
-            "saleid": 9,
-            "sold": false
+            "saleid": "saleid",
+            "admin": "admin email",
+            "chat": "the chat id",
+            "details": "it is good ", 
+            "high": "buyer mail",
+            "image": "link to a image",
+            "name": "sale name",
+            "price": "20202", 
+            "isadmin":false,
+            "offers: true,
+            "saved":true,
+            "sold":true
         }
     ]}
 ```

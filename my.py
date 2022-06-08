@@ -15,12 +15,13 @@ def mySales(request):
             return jsonify({"status": "error", "message": "you did not create a sale yet"})
         for id in mysalesid:
             sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
+            sale["isadmin"] = True
             sale["offers"] = False
             sale["saved"] = False
-            if sale["saleid"] in user["offers"]:
-                sale["offers"] = True
             if sale["saleid"] in user["saved"]:
                 sale["saved"] = True
+            if sale["saleid"] in user["offers"]:
+                sale["offers"] = True
             mysales.append(sale)
         response = {"status": "success", "message": mysales}
         return jsonify(response)
@@ -41,8 +42,9 @@ def mySaved(request):
             return jsonify({"status": "error", "message": "you have no saved sales"})
         for id in mysavedid:
             sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
-            sale["admin"] = False
+            sale["isadmin"] = False
             sale["offers"] = False
+            sale["saved"] = True
             if sale["saleid"] in user["sales"]:
                 sale["admin"] = True
             if sale["saleid"] in user["offers"]:
@@ -67,12 +69,13 @@ def myOffers(request):
             return jsonify({"status": "error", "message": "you did not bid on a sale yet"})
         for id in myoffersid:
             sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
-            sale["admin"] = False
+            sale["isadmin"] = False
+            sale["offers"] = True
             sale["saved"] = False
+            if sale["saleid"] in user["saved"]:
+                sale["saved"] = True
             if sale["saleid"] in user["sales"]:
                 sale["admin"] = True
-            if sale["saleid"] in user["offers"]:
-                sale["offers"] = True
             myoffers.append(sale)
         response = {"status": "success", "message": myoffers}
         return jsonify(response)
