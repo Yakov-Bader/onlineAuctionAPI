@@ -1,4 +1,10 @@
 from flask_socketio import *
+from funcs import checkuser, connect
+from flask import jsonify
+
+
+def connect():
+    print("connected")
 
 
 def join(data):

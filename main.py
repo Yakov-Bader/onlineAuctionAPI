@@ -1,5 +1,3 @@
-import os
-
 from inup import *
 from my import *
 from sales import *
@@ -88,6 +86,11 @@ def MyOffers():
 @socketio.on('send')
 def on_send(data):
     send(data)
+
+
+@socketio.on('connect')
+def on_connect():
+    connect()
 
 
 @socketio.on('join')
