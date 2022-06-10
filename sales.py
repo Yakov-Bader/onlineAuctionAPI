@@ -1,4 +1,4 @@
-import flask
+from bson import ObjectId
 from flask import jsonify
 from funcs import checkuser, connect
 
@@ -12,8 +12,10 @@ def getsales(request):
         results = []
         if not str(info.get("amount")).isnumeric():
             return jsonify({"status": "error", "message": "you need to give a valid number"})
-        for s in sales.find({}, {"_id": 0}).limit(info.get("amount")):
+        for s in sales.find({}).limit(int(info.get("amount"))):
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
+            s["saleid"] = str(s["_id"])
+            del s["_id"]
             s["isadmin"] = False
             s["offers"] = False
             s["saved"] = False
@@ -41,12 +43,7 @@ def sales(request):
         if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):
             return jsonify({"status": "error", "message": "you are missing some details"})
         if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
-            saleid = db.id
-            sid = saleid.find_one({})
-            sid = sid["saleid"]
-            saleid.update_one({"saleid": sid}, {"$set": {"saleid": sid + 1}})
             sale = {
-                "saleid": sid,
                 "admin": info.get("admin").lower(),
                 "chat": "chat id",
                 "image": info.get("image"),
@@ -57,8 +54,9 @@ def sales(request):
                 "sold": False
             }
             sales.insert_one(sale)
+            s = sales.find_one(sale)
             users = db.users
-            users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": sid}})
+            users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": str(s["_id"])}})
             return jsonify({"status": "success", "message": "you have crated a new sale"})
         else:
             return jsonify({"status": "error", "message": "you already have a sale with this name"})
@@ -72,9 +70,9 @@ def bid(request):
     users = db.users
     if checkuser(info.get("email").lower(), info.get("password"), users):
         sales = db.sales
-        sale = sales.find_one({"saleid": float(info.get("id"))})
+        sale = sales.find_one({"_id": ObjectId(info.get("id"))})
         if sale["price"] < float(info.get("price")):
-            sales.update_one({"saleid": float(info.get("id"))},
+            sales.update_one({"_id": ObjectId(info.get("id"))},
                              {"$set": {"high": info.get("email").lower(), "price": float(info.get("price"))}})
             users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("id")}})
             return jsonify({"status": "success", "message": "you have updated the sale"})
@@ -102,14 +100,15 @@ def like(request):
 
 
 def remove(request):
+    # TODO ask for name, dont search for it
     info = request.json
     db = connect()
     users = db.users
-    if users.find_one({'email': info.get("email").lower(), 'password': info.get("password"), 'sales': int(info.get("id"))}):
+    if users.find_one({'email': info.get("email").lower(), 'password': info.get("password"), 'sales': info.get("id")}):
         sales = db.sales
-        if sales.find_one({"saleid": int(info.get("id"))}):
-            name = sales.find_one({"saleid": int(info.get("id"))})["name"]
-            sales.delete_one({"saleid": int(info.get("id"))})
+        if sales.find_one({"_id": ObjectId(info.get("id"))}):
+            name = sales.find_one({"_id": ObjectId(info.get("id"))})["name"]
+            sales.delete_one({"_id": ObjectId(info.get("id"))})
             return jsonify({"status": "success", "message": "you removed the sale {}".format(name)})
         else:
             return jsonify({"status": "error", "message": "the sale does not exist"})

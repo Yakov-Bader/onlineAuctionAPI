@@ -31,7 +31,7 @@ response: `{"status": "error", "message": "the {} account does not exist"}`
 ## Get Sales  
 **POST** [https://onlineauctionapi.herokuapp.com/getsales](https://onlineauctionapi.herokuapp.com/getsales)   
 describe: this is for getting the list of sales for the home page   
-required parameters: email (string), password (string), amount (int);   
+required parameters: email (string), password (string), amount (int or string);   
 response: `{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "error", "message": "you need to give a valid amount number"}`    
 response: array of up to "amount" objects of sales:
@@ -76,14 +76,14 @@ response: `{"status": "error", "message": "I don't recognize you"}`
 ## Bid
 **POST** [https://onlineauctionapi.herokuapp.com/bid](https://onlineauctionapi.herokuapp.com/bid)     
 describe: this is for to bid on a sale   
-required parameters: email (string), password (string), id (int), price (int);    
+required parameters: email (string), password (string), id (string), price (int);    
 response: `{"status": "success", "message": "you have updated the sale"}`  
 response: `{"status": "error", "message": "you need to bid higher"}`    
 response: `{"status": "error", "message": "I don't recognize you"}`  
 ## Like
 **POST** [https://onlineauctionapi.herokuapp.com/like](https://onlineauctionapi.herokuapp.com/like)    
 describe: when someone likes or unlikes a sale, it will appear or disappear from the liked list
-required parameters: email (string), password (string), id (int), like (boolean) (false for remove like or true for like);   
+required parameters: email (string), password (string), id (string), like (boolean) (false for remove like or true for like);   
 response: `{"status": "success", "message": "your remove like was successful"}`    
 response: `{"status": "success", "message": "your like was successful"}`   
 response: `{"status": "error", "message": "I don't recognize you"}`    
@@ -91,7 +91,7 @@ response: `{"status": "error", "message": "you are missing some details"}`
 ## Remove  
 **POST** [https://onlineauctionapi.herokuapp.com/remove](https://onlineauctionapi.herokuapp.com/remove)    
 describe: admin remove a sale
-required parameters: email (string), password (string), id (int);  
+required parameters: email (string), password (string), id (string);  
 response: `{"status": "success", "message": "you removed the sale {}"}`  
 response: `{"status": "error", "message": "the sale does not exist"}`  
 response: `{"status": "error", "message": "I don't recognize you"}`  

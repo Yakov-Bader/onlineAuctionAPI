@@ -1,3 +1,4 @@
+from bson import ObjectId
 from flask import jsonify
 from funcs import checkuser, connect
 
@@ -8,7 +9,9 @@ def signin(request):
     users = db.users
     if checkuser(info.get("email"), info.get("password"), users):
         user = users.find_one({'email': info.get("email"), 'password': info.get("password")})
-        return jsonify({"status": "success", "message": "Welcome to {} {}.".format(user["fname"], user["lname"]), "fname": user["fname"], "lname": user["lname"], "email": user["email"], "password": user["password"]})
+        return jsonify({"status": "success", "message": "Welcome to {} {}.".format(user["fname"], user["lname"]),
+                        "fname": user["fname"], "lname": user["lname"], "email": user["email"],
+                        "password": user["password"]})
     else:
         return jsonify({"status": "error", "message": "Your username or password are incorrect."})
 
@@ -29,7 +32,8 @@ def signup(request):
                 "saved": []
             }
             users.insert_one(user)
-            return jsonify({"status": "success", "message": " welcome to {} {} ".format(info.get("fname"), info.get("lname").lower())})
+            return jsonify({"status": "success",
+                            "message": " welcome to {} {} ".format(info.get("fname"), info.get("lname").lower())})
         else:
             return jsonify({"status": "error", "message": "you already exist"})
     else:
@@ -44,9 +48,11 @@ def delete(request):
     if checkuser(info.get("email"), info.get("password"), users):
         user = users.find_one({"email": info.get("email").lower(), "password": info.get("password")})
         for id in user["sales"]:
-                sales.delete_one({"saleid": int(id)})
+            sales.delete_one({"_id": ObjectId(id)})
         users.delete_one({"email": info.get("email").lower(), "password": info.get("password")})
-        return jsonify({"status": "success", "message": "you deleted {} account and it's sales, you could always sign up again".format(info.get("email").lower())})
+        return jsonify({"status": "success",
+                        "message": "you deleted {} account and it's sales, you could always sign up again".format(
+                            info.get("email").lower())})
     else:
-        return jsonify({"status": "error", "message": "the {} account does not exist".format(info.get("email").lower())})
-
+        return jsonify(
+            {"status": "error", "message": "the {} account does not exist".format(info.get("email").lower())})

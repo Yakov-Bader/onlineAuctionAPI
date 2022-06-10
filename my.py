@@ -1,3 +1,4 @@
+from bson import ObjectId
 from flask import jsonify
 from funcs import checkuser, connect
 
@@ -14,9 +15,12 @@ def mySales(request):
         if not mysalesid:
             return jsonify({"status": "error", "message": "you did not create a sale yet"})
         for id in mysalesid:
-            sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
+            sale = sales.find_one({"_id": ObjectId(id)})
             if not sale:
+                users.update_one({"email": info.get("email").lower()}, {"$pull": {"sales": id}})
                 continue
+            sale["saleid"] = str(sale["_id"])
+            del sale["_id"]
             sale["isadmin"] = True
             sale["offers"] = False
             sale["saved"] = False
@@ -43,9 +47,12 @@ def mySaved(request):
         if not mysavedid:
             return jsonify({"status": "error", "message": "you have no saved sales"})
         for id in mysavedid:
-            sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
+            sale = sales.find_one({"_id": ObjectId(id)})
             if not sale:
+                users.update_one({"email": info.get("email").lower()}, {"$pull": {"saved": id}})
                 continue
+            sale["saleid"] = str(sale["_id"])
+            del sale["_id"]
             sale["isadmin"] = False
             sale["offers"] = False
             sale["saved"] = True
@@ -72,9 +79,12 @@ def myOffers(request):
         if not myoffersid:
             return jsonify({"status": "error", "message": "you did not bid on a sale yet"})
         for id in myoffersid:
-            sale = sales.find_one({"saleid": float(id)}, {"_id": 0})
+            sale = sales.find_one({"_id": ObjectId(id)})
             if not sale:
+                users.update_one({"email": info.get("email").lower()}, {"$pull": {"offers": id}})
                 continue
+            sale["saleid"] = str(sale["_id"])
+            del sale["_id"]
             sale["isadmin"] = False
             sale["offers"] = True
             sale["saved"] = False
