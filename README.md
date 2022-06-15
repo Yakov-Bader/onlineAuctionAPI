@@ -28,10 +28,33 @@ describe: delete a user account;
 required parameters: email (string), password (string);  
 response: `{"status": "success", "message": "you deleted {} account and it's sales, you could always sign up again"}`  
 response: `{"status": "error", "message": "the {} account does not exist"}`
-## Get Sales  
-**POST** [https://onlineauctionapi.herokuapp.com/getsales](https://onlineauctionapi.herokuapp.com/getsales)   
+## Get Sale  
+**POST** [https://onlineauctionapi.herokuapp.com/getsale](https://onlineauctionapi.herokuapp.com/getsale)   
 describe: this is for getting the list of sales for the home page   
 required parameters: email (string), password (string), amount (int or string);   
+response: `{"status": "error", "message": "I don't recognize you"}`  
+response:`{"status": "error", "message": "I don't recognize this sale"}`    
+response: a salse:
+```
+{"status": "success",
+ "message": { "saleid": "saleid",
+            "admin": "admin email",
+            "chat": "the chat id",
+            "details": "it is good ", 
+            "high": "buyer mail",
+            "image": "link to a image",
+            "name": "sale name",
+            "price": "20202",   
+            "sold": true,
+            "isadmin":true,
+            "offers: false,
+            "saved":false }
+        }
+```
+## Get Sales  
+**POST** [https://onlineauctionapi.herokuapp.com/getsales](https://onlineauctionapi.herokuapp.com/getsales)   
+describe: this is for requesting a specific sale   
+required parameters: email (string), password (string), id (string);   
 response: `{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "error", "message": "you need to give a valid amount number"}`    
 response: array of up to "amount" objects of sales:

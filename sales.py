@@ -3,6 +3,35 @@ from flask import jsonify
 from funcs import checkuser, connect
 
 
+def getsale(request):
+    info = request.json
+    db = connect()
+    users = db.users
+    sales = db.sales
+    if checkuser(info.get("email"), info.get("password"), users):
+        if sales.find_one({"_id": ObjectId(info.get("id"))}):
+            s = sales.find_one({"_id": ObjectId(info.get("id"))})
+            user = users.find_one({"email": info.get("email"), "password": info.get("password")})
+            s["saleid"] = info.get("id")
+            del s["_id"]
+            s["isadmin"] = False
+            s["offers"] = False
+            s["saved"] = False
+            if s["saleid"] in user["sales"]:
+                s["isadmin"] = True
+            if s["saleid"] in user["offers"]:
+                s["offers"] = True
+            if s["saleid"] in user["saved"]:
+                s["saved"] = True
+            if not s["sold"]:
+                del s["sold"]
+            return jsonify({"status": "success", "message": s})
+        else:
+            return jsonify({"status": "error", "message": "I don't recognize this sale"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})
+
+
 def getsales(request):
     info = request.json
     db = connect()
