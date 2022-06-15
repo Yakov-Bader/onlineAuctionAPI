@@ -30,7 +30,7 @@ response: `{"status": "success", "message": "you deleted {} account and it's sal
 response: `{"status": "error", "message": "the {} account does not exist"}`
 ## Get Sale  
 **POST** [https://onlineauctionapi.herokuapp.com/getsale](https://onlineauctionapi.herokuapp.com/getsale)   
-describe: this is for getting the list of sales for the home page   
+describe: this is for requesting a specific sale   
 required parameters: email (string), password (string), amount (int or string);   
 response: `{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "error", "message": "I don't recognize this sale"}`    
@@ -53,7 +53,7 @@ response: a salse:
 ```
 ## Get Sales  
 **POST** [https://onlineauctionapi.herokuapp.com/getsales](https://onlineauctionapi.herokuapp.com/getsales)   
-describe: this is for requesting a specific sale   
+describe: this is for getting the list of sales for the home page   
 required parameters: email (string), password (string), id (string);   
 response: `{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "error", "message": "you need to give a valid amount number"}`    
