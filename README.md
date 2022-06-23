@@ -31,7 +31,7 @@ response: `{"status": "error", "message": "the {} account does not exist"}`
 ### Get Sale  
 **POST** [https://onlineauctionapi.herokuapp.com/getsale](https://onlineauctionapi.herokuapp.com/getsale)   
 describe: this is for requesting a specific sale   
-required parameters: email (string), password (string), amount (int or string);   
+required parameters: email (string), password (string), id (string);   
 response: `{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "error", "message": "I don't recognize this sale"}`    
 response: a salse:
