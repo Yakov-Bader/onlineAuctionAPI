@@ -9,7 +9,7 @@ import git
 from flask_socketio import *
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*":{"origins":"*"}})
+CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
