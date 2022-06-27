@@ -93,9 +93,9 @@ def on_send(data):
     send(data)
 
 
-#@socketio.on('connect')
-#def on_connect():
-#    connect()
+@socketio.on('connect')
+def on_connect():
+    connect()
 
 
 @socketio.on('join')
