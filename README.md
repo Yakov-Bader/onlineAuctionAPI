@@ -196,6 +196,22 @@ response: this is an array of his offered sales
         }
     ]}
 ```
+## get profile
+required params: email, password;  
+response:`{"status": "error", "message": "I don't recognize you"}`  
+response: this is a user profile object
+```
+{"status": "success", "message": {
+        "email": "email@email.com",  
+        "fname": "yyyyy",  
+        "lname": "bbbbbb",
+        "password": "shhhh, its a secret"
+    }
+   ```
+## update profile
+required params: email, password, newname, newlast, newpass;  
+response:`{"status": "error", "message": "I don't recognize you"}`  
+response:`{"status": "success", "message": "you have just updated you profile"}`
 # socket io
 the link to connect to the socket is [https://onlineauctionapi.herokuapp.com/](https://onlineauctionapi.herokuapp.com/) the socket does not completely work yet
 ## connect 

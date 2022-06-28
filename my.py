@@ -97,3 +97,25 @@ def myOffers(request):
         return jsonify(response)
     else:
         return jsonify({"status": "error", "message": "I don't recognize you"})
+
+
+def getProfile(request):
+    info = request.json
+    db = connect()
+    users = db.users
+    if checkuser(info.get("email"), info.get("password"), users):
+        user = users.find_one({'email': info.get("email"), 'password': info.get("password")},{"_id": 0, "offers": 0, "sales": 0, "saved": 0})
+        return jsonify({"status": "success", "message": user})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})
+
+
+def updateProfile(request):
+    info = request.json
+    db = connect()
+    users = db.users
+    if checkuser(info.get("email"), info.get("password"), users):
+        users.update_one({"email": info.get("email").lower()}, {"$set": {"fname": info.get("newname"), "lname": info.get("newlast"), "password": info.get("newpass")}})
+        return jsonify({"status": "success", "message": "you have just updated you profile"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})

@@ -88,6 +88,16 @@ def MyOffers():
     return myOffers(request)
 
 
+@app.route('/getprofile', methods=['POST'])
+def GetProfile():
+    return getProfile(request)
+
+
+@app.route('/updateprofile', methods=['POST'])
+def UpdateProfile():
+    return updateProfile(request)
+
+
 @socketio.on('send')
 def on_send(data):
     send(data)
@@ -109,5 +119,5 @@ def on_leave(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='localhost', port=5000, debug=True)
-    # app.run(host='localhost', port=5000, debug=True)
+    #socketio.run(app, host='localhost', port=5000, debug=True)
+    app.run(host='localhost', port=5000, debug=True)
