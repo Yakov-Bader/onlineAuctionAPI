@@ -197,6 +197,7 @@ response: this is an array of his offered sales
     ]}
 ```
 ## get profile
+**POST** [https://onlineauctionapi.herokuapp.com/getprofile](https://onlineauctionapi.herokuapp.com/getprofile)    
 required params: email, password;  
 response:`{"status": "error", "message": "I don't recognize you"}`  
 response: this is a user profile object
@@ -208,7 +209,8 @@ response: this is a user profile object
         "password": "shhhh, its a secret"
     }
    ```
-## update profile
+## update profile  
+**POST** [https://onlineauctionapi.herokuapp.com/updateprofile](https://onlineauctionapi.herokuapp.com/updateprofile)    
 required params: email, password, newname, newlast, newpass;  
 response:`{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "success", "message": "you have just updated you profile"}`
