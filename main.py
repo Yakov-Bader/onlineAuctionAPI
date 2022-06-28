@@ -105,7 +105,7 @@ def on_send(data):
 
 @socketio.on('connect')
 def on_connect():
-    connect()
+    send("data")
 
 
 @socketio.on('join')
