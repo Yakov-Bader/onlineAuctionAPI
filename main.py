@@ -9,7 +9,7 @@ import git
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=True, logger=True)
+socketio = SocketIO.init_app(app, cors_allowed_origins="*", engineio_logger=True, logger=True)
 
 
 @app.route('/git_update', methods=['POST'])
