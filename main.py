@@ -4,7 +4,7 @@ from sales import *
 from chat import *
 from flask import Flask, request, jsonify
 from flask_cors import cross_origin, CORS
-from pip._internal.vcs import git
+# from pip._internal.vcs import git
 import git
 
 app = Flask(__name__)
@@ -104,7 +104,7 @@ def on_send(data):
 
 @socketio.on('connect')
 def on_connect():
-    connect("connected")
+    print("connected")
 
 
 @socketio.on('join')
