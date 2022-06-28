@@ -1,8 +1,10 @@
+from flask import jsonify
 from flask_socketio import *
 
 
 def connect(data):
-    send(data)
+    # send(data)
+    return jsonify(data)
 
 
 def join(data):
