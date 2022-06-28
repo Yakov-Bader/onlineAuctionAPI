@@ -1,1 +1,1 @@
-web:gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker main:app --preload
+web: gunicorn main:app --preload
