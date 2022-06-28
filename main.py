@@ -9,7 +9,7 @@ import git
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", ping_interval=20)
 
 
 @app.route('/git_update', methods=['POST'])
@@ -118,5 +118,5 @@ def on_leave(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host='localhost', port=5000, debug=True)
     # app.run(host='localhost', port=5000, debug=True)
