@@ -3,8 +3,7 @@ from flask_socketio import *
 
 
 def connect(data):
-    # send(data)
-    return jsonify(data)
+    emit('my response', {'data': data})
 
 
 def join(data):

@@ -2,6 +2,7 @@ from inup import *
 from my import *
 from sales import *
 from chat import *
+import os
 from flask import Flask, request, jsonify
 from flask_cors import cross_origin, CORS
 # from pip._internal.vcs import git
@@ -9,7 +10,7 @@ import git
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", ping_interval=20)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 @app.route('/git_update', methods=['POST'])
@@ -104,7 +105,7 @@ def on_send(data):
 
 @socketio.on('connect')
 def on_connect():
-    print("connected")
+    connect("connected")
 
 
 @socketio.on('join')
@@ -118,5 +119,5 @@ def on_leave(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='localhost', port=5000, debug=True)
+    socketio.run(app, host='localhost', port=int(os.environ.get('PORT', 33507)), debug=True)
     # app.run(host='localhost', port=5000, debug=True)
