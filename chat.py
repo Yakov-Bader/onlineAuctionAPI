@@ -1,8 +1,8 @@
 from flask_socketio import *
 
 
-def connect():
-    print("connected")
+def connect(data):
+    send(data)
 
 
 def join(data):

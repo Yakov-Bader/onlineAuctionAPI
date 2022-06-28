@@ -6,7 +6,6 @@ from flask import Flask, request, jsonify
 from flask_cors import cross_origin, CORS
 from pip._internal.vcs import git
 import git
-from flask_socketio import *
 
 app = Flask(__name__)
 CORS(app)
@@ -105,7 +104,7 @@ def on_send(data):
 
 @socketio.on('connect')
 def on_connect():
-    send("data")
+    connect("connected")
 
 
 @socketio.on('join')
