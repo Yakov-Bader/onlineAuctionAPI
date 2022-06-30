@@ -1,9 +1,42 @@
 from flask import jsonify
 from flask_socketio import *
+from funcs import checkuser, connect
+from bson import ObjectId
 
 
-def connect(data):
-    emit('my response', {'data': data})
+def message(request):
+    info = request.json
+    db = connect()
+    chat = db.chat
+    users = db.users
+    if checkuser(info.get("email"), info.get("password"), users):
+        if chat.find_one({"_id": ObjectId(info.get("id"))}):
+            msg = {
+                "content": info.get("content"),
+                "time": info.get("time"),
+                "who": info.get("email")
+            }
+            chat.update_one({"_id": ObjectId(info.get("id"))}, {"$push": {"msg": msg}})
+            return jsonify({"status": "success", "message": "grate, your message was sent"})
+        else:
+            return jsonify({"status": "error", "message": "cant find this chat"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})
+
+
+def getChat(request):
+    info = request.json
+    db = connect()
+    chat = db.chat
+    users = db.users
+    if checkuser(info.get("email"), info.get("password"), users):
+        if chat.find_one({"_id": ObjectId(info.get("id"))}):
+            ch = chat.find_one({"_id": ObjectId(info.get("id"))})
+            return jsonify({"status": "success", "message": ch["msg"]})
+        else:
+            return jsonify({"status": "error", "message": "cant find this chat"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})
 
 
 def join(data):

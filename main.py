@@ -98,6 +98,16 @@ def UpdateProfile():
     return updateProfile(request)
 
 
+@app.route('/message', methods=['POST'])
+def Message():
+    return message(request)
+
+
+@app.route('/getchat', methods=['POST'])
+def GetChat():
+    return getChat(request)
+
+
 @socketio.on('send')
 def on_send(data):
     send(data)
@@ -119,5 +129,5 @@ def on_leave(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, port=int(os.environ.get('PORT', 5000)), debug=True)
-    # app.run(host='localhost', port=5000, debug=True)
+    # socketio.run(app, port=int(os.environ.get('PORT', 5000)), debug=True)
+    app.run(host='localhost', port=5000, debug=True)

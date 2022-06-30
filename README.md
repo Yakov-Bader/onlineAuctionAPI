@@ -46,6 +46,8 @@ response: a salse:
             "name": "sale name",
             "price": "20202",   
             "sold": true,
+            "biders": ["yakov bader","chaim"],
+            "likes": ["yakov bader","chaim"],
             "isadmin":true,
             "offers: false,
             "saved":false }
@@ -68,7 +70,9 @@ response: array of up to "amount" objects of sales:
             "high": "buyer mail",
             "image": "link to a image",
             "name": "sale name",
-            "price": "20202",   
+            "price": "20202", 
+            "biders": ["yakov bader","chaim"],
+            "likes": ["yakov bader","chaim"],  
             "sold": true,
             "isadmin":true,
             "offers: false,
@@ -82,6 +86,8 @@ response: array of up to "amount" objects of sales:
             "high": "buyer mail",
             "image": "link to a image",
             "name": "sale name",
+            "biders": ["yakov bader","chaim"],
+            "likes": ["yakov bader","chaim"],
             "price": "20202", 
             "isadmin":false,
             "offers: true,
@@ -138,6 +144,8 @@ response: this is an array of his sales
             "name": "sale name",
             "price": "20202", 
             "isadmin":true,
+            "biders": ["yakov bader","chaim"],
+            "likes": ["yakov bader","chaim"],
             "offers: false,
             "saved":true,
             "sold":false
@@ -162,7 +170,9 @@ response: this is an array of his saved sales
             "high": "buyer mail",
             "image": "link to a image",
             "name": "sale name",
-            "price": "20202", 
+            "price": "20202",
+            "biders": ["yakov bader","chaim"],
+            "likes": ["yakov bader","chaim"], 
             "isadmin":false,
             "offers: true,
             "saved":true,
@@ -188,7 +198,9 @@ response: this is an array of his offered sales
             "high": "buyer mail",
             "image": "link to a image",
             "name": "sale name",
-            "price": "20202", 
+            "price": "20202",
+            "biders": ["yakov bader","chaim"],
+            "likes": ["yakov bader","chaim"], 
             "isadmin":false,
             "offers: true,
             "saved":true,
@@ -196,7 +208,7 @@ response: this is an array of his offered sales
         }
     ]}
 ```
-## get profile
+### get profile
 **POST** [https://onlineauctionapi.herokuapp.com/getprofile](https://onlineauctionapi.herokuapp.com/getprofile)    
 required params: email, password;  
 response:`{"status": "error", "message": "I don't recognize you"}`  
@@ -209,11 +221,46 @@ response: this is a user profile object
         "password": "shhhh, its a secret"
     }
    ```
-## update profile  
+### update profile  
 **POST** [https://onlineauctionapi.herokuapp.com/updateprofile](https://onlineauctionapi.herokuapp.com/updateprofile)    
 required params: email, password, newname, newlast, newpass;  
 response:`{"status": "error", "message": "I don't recognize you"}`  
-response:`{"status": "success", "message": "you have just updated you profile"}`
+response:`{"status": "success", "message": "you have just updated you profile"}`   
+### message
+***POST***  [https://onlineauctionapi.herokuapp.com/getchat](https://onlineauctionapi.herokuapp.com/getchat)  
+required params: email, password, time, content  
+response: `{"status": "success", "message": "grate, your message was sent"}`  
+response: `{"status": "error", "message": "cant find this chat"}`  
+response: `{"status": "error", "message": "I don't recognize you"}`  
+### get chat 
+***POST***  [https://onlineauctionapi.herokuapp.com/getchat](https://onlineauctionapi.herokuapp.com/getchat)    
+required params: email, password, id;
+response: `{"status": "error", "message": "cant find this chat"}`  
+response: `{"status": "error", "message": "I don't recognize you"}`  
+response: array of chat messages
+```
+{"status": "success", "message": [
+        {
+            "content": "yersfgbsgb",
+            "time": "0",
+            "who": "email of poster"
+        },
+        {
+            "content": "wertgvcxs",
+            "time": "0",
+            "who": "email of the poster "
+        },
+        {
+            "content": "sdfghgfdfg",
+            "time": "dfgfdfgf",
+            "who": "hen@gmail.com"
+        },
+        {
+            "content": "sdfghgfdfg",
+            "time": "dfgfdfgf",
+            "who": "hen@gmail.com"
+        }}
+   ```
 # socket io
 the link to connect to the socket is [https://onlineauctionapi.herokuapp.com/](https://onlineauctionapi.herokuapp.com/) the socket does not completely work yet
 ## connect 

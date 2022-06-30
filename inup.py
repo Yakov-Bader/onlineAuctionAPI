@@ -44,11 +44,14 @@ def delete(request):
     info = request.json
     db = connect()
     users = db.users
-    sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
         user = users.find_one({"email": info.get("email").lower(), "password": info.get("password")})
+        sales = db.sales
+        chat = db.chat
         for id in user["sales"]:
-            sales.delete_one({"_id": ObjectId(id)})
+            s = sales.delete_one({"_id": ObjectId(id)})
+            ch = s["chat"]
+            chat.delete_one({"_id": ObjectId(ch)})
         users.delete_one({"email": info.get("email").lower(), "password": info.get("password")})
         return jsonify({"status": "success",
                         "message": "you deleted {} account and it's sales, you could always sign up again".format(
