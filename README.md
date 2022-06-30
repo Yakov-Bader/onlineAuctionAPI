@@ -227,7 +227,7 @@ required params: email, password, newname, newlast, newpass;
 response:`{"status": "error", "message": "I don't recognize you"}`  
 response:`{"status": "success", "message": "you have just updated you profile"}`   
 ### message
-***POST***  [https://onlineauctionapi.herokuapp.com/getchat](https://onlineauctionapi.herokuapp.com/getchat)  
+***POST***  [https://onlineauctionapi.herokuapp.com/message](https://onlineauctionapi.herokuapp.com/message)  
 required params: email, password, time, content  
 response: `{"status": "success", "message": "grate, your message was sent"}`  
 response: `{"status": "error", "message": "cant find this chat"}`  
