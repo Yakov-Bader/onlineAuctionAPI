@@ -117,8 +117,8 @@ def Sell():
 
 
 @socketio.on('connect')
-def on_join(data):
-    join(data)
+def on_join():
+    print("connected")
 
 
 @socketio.on('send')

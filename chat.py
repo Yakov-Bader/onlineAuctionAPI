@@ -39,12 +39,8 @@ def getChat(request):
         return jsonify({"status": "error", "message": "I don't recognize you"})
 
 
-def join(data):
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    send(username + ' has entered the room.', to=room)
-    # return the chat
+def join():
+    print("dddd")
 
 
 def leave(data):
