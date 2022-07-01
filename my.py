@@ -119,3 +119,19 @@ def updateProfile(request):
         return jsonify({"status": "success", "message": "you have just updated you profile"})
     else:
         return jsonify({"status": "error", "message": "I don't recognize you"})
+
+
+def sell(request):
+    info = request.json
+    db = connect()
+    users = db.users
+    sales = db.sales
+    if checkuser(info.get("email"), info.get("password"), users):
+        if users.find_one({"sales": info.get("id"), "email": info.get("email"), "password":info.get("password")}):
+            sales.update_one({"_id": ObjectId(info.get("id"))}, {"$set": {"sold": True}})
+            sale = sales.find_one({"_id": ObjectId(info.get("id"))})
+            return jsonify({"status": "success", "message": "you have just sold the sale to {}".format(sale["high"])})
+        else:
+            return jsonify({"status": "error", "message": "you dont own this sale"})
+    else:
+        return jsonify({"status": "error", "message": "I don't recognize you"})

@@ -260,7 +260,14 @@ response: array of chat messages
             "time": "dfgfdfgf",
             "who": "hen@gmail.com"
         }}
-   ```
+   ```  
+###sell  
+***POST***   
+[https://onlineauctionapi.herokuapp.com/sell](https://onlineauctionapi.herokuapp.com/sell)    
+required params: email, password, id;  
+response: `{"status": "success", "message": "you have just sold the sale to {some email}"}`   
+response: `{"status": "error", "message": "you dont own this sale"}`   
+response: `{"status": "error", "message": "I don't recognize you"}`
 # socket io
 the link to connect to the socket is [https://onlineauctionapi.herokuapp.com/](https://onlineauctionapi.herokuapp.com/) the socket does not completely work yet
 ## connect 
