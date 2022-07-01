@@ -106,7 +106,8 @@ def bid(request):
         sales = db.sales
         sale = sales.find_one({"_id": ObjectId(info.get("id"))})
         if sale["price"] < float(info.get("price")):
-            users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("id")}})
+            if not users.find_one({"email": info.get("email").lower(), "offers": info.get("id"), 'password': info.get("password")}):
+                users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("id")}})
             user = users.find_one({"email": info.get("email").lower(), 'password': info.get("password")})
             sales.update_one({"_id": ObjectId(info.get("id"))}, {"$set": {"high": info.get("email").lower(), "price": float(info.get("price"))}})
             sales.update_one({"_id": ObjectId(info.get("id"))}, {"$push": {"biders": user["fname"]+" "+user["lname"]}})

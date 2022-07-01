@@ -116,6 +116,11 @@ def Sell():
     return sell(request)
 
 
+@socketio.on('connect')
+def on_join(data):
+    join(data)
+
+
 @socketio.on('send')
 def on_send(data):
     send(data)
