@@ -5,14 +5,16 @@ from chat import *
 import os
 from flask import Flask, request, jsonify
 from flask_cors import cross_origin, CORS
-# from pip._internal.vcs import git
 import git
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=True, logger=True)
 
-
+# web: gunicorn main:app --preload
+# gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 module:app
 @app.route('/git_update', methods=['POST'])
 def git_update():
     repo = git.Repo('./onlineAuctionAPI')
@@ -29,7 +31,7 @@ def hello_world():
 
 
 @app.route('/signup', methods=['POST'])
-def signUp():
+def Signup():
     return signup(request)
 
 
@@ -118,11 +120,6 @@ def on_send(data):
     send(data)
 
 
-@socketio.on('connect')
-def on_connect():
-    connect("connected")
-
-
 @socketio.on('join')
 def on_join(data):
     join(data)
@@ -134,5 +131,5 @@ def on_leave(data):
 
 
 if __name__ == '__main__':
-    # socketio.run(app, port=int(os.environ.get('PORT', 5000)), debug=True)
-    app.run(host='localhost', port=5000, debug=True)
+    socketio.run(app, debug=True)
+    # app.run(host='localhost', port=5000, debug=True)
