@@ -42,6 +42,7 @@ def getsales(request):
         if not str(info.get("amount")).isnumeric():
             return jsonify({"status": "error", "message": "you need to give a valid number"})
         for s in sales.find({}).limit(int(info.get("amount"))):
+            print(s)
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
             s["saleid"] = str(s["_id"])
             del s["_id"]
@@ -54,9 +55,7 @@ def getsales(request):
                 s["offers"] = True
             if s["saleid"] in user["saved"]:
                 s["saved"] = True
-            if not s["sold"]:
-                del s["sold"]
-                results.append(s)
+            results.append(s)
         response = {"status": "success", "message": results}
         return jsonify(response)
     else:
