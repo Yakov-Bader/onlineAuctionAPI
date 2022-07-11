@@ -14,6 +14,7 @@ CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=True, logger=True)
 
 
+# TODO: check with verification to mail that it is real mail
 # web: gunicorn main:app --preload
 # gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 module:app
 @app.route('/git_update', methods=['POST'])
