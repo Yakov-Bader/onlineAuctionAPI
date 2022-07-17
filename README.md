@@ -1,6 +1,6 @@
 # onlineAouctionAPI
 ### Check
-**GET** click [here](https://main--auctionlive.netlify.app/signin) to go to the soon working website 
+**GET** click [here](https://main--auctionlive.netlify.app/signin) to go to the website 
 ### Sign Up
 **POST** [https://onlineauctionapi.herokuapp.com/signup](https://onlineauctionapi.herokuapp.com/signup)   
 describe: this is for signing up to the website   
