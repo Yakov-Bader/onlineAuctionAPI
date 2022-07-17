@@ -250,22 +250,26 @@ response: array of chat messages
         {
             "content": "yersfgbsgb",
             "time": "0",
-            "who": "email of poster"
+            "who": "email of poster",
+            "name": "hsad sdf"
         },
         {
             "content": "wertgvcxs",
             "time": "0",
-            "who": "email of the poster "
+            "who": "email of the poster ",
+             "name": "hsad sdf"
         },
         {
             "content": "sdfghgfdfg",
             "time": "dfgfdfgf",
-            "who": "hen@gmail.com"
+            "who": "hen@gmail.com",
+             "name": "hsad sdf"
         },
         {
             "content": "sdfghgfdfg",
             "time": "dfgfdfgf",
-            "who": "hen@gmail.com"
+            "who": "hen@gmail.com",
+             "name": "hsad sdf"
         }}
    ```
 # socket io

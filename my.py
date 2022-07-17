@@ -104,7 +104,8 @@ def getProfile(request):
     db = connect()
     users = db.users
     if checkuser(info.get("email"), info.get("password"), users):
-        user = users.find_one({'email': info.get("email"), 'password': info.get("password")},{"_id": 0, "offers": 0, "sales": 0, "saved": 0})
+        user = users.find_one({'email': info.get("email"), 'password': info.get("password")}, {"_id": 0, "offers": 0, "sales": 0, "saved": 0})
+        print(user['fname'])
         return jsonify({"status": "success", "message": user})
     else:
         return jsonify({"status": "error", "message": "I don't recognize you"})
