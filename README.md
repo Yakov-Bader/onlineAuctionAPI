@@ -102,6 +102,7 @@ response: `{"status": "success", "message": "you have crated a new sale"}`
 response: `{"status": "error", "message": "you are missing some details"}`  
 response: `{"status": "error", "message": "you already have a sale with this name"}`
 response: `{"status": "error", "message": "I don't recognize you"}`  
+response: `{"status": "error", "message": "this is too high of a number"}`
 ### Bid
 **POST** [https://onlineauctionapi.herokuapp.com/bid](https://onlineauctionapi.herokuapp.com/bid)     
 describe: this is for to bid on a sale   
@@ -117,6 +118,7 @@ response: `{"status": "success", "message": "your remove like was successful"}`
 response: `{"status": "success", "message": "your like was successful"}`   
 response: `{"status": "error", "message": "I don't recognize you"}`    
 response: `{"status": "error", "message": "you are missing some details"}`  
+response: `{"status": "error", "message": "this is too high of a number"}`
 ### Remove  
 **POST** [https://onlineauctionapi.herokuapp.com/remove](https://onlineauctionapi.herokuapp.com/remove)    
 describe: admin remove a sale

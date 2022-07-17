@@ -71,26 +71,29 @@ def sales(request):
         if not (info.get("image") and info.get("details") and info.get("name") and info.get("price")):
             return jsonify({"status": "error", "message": "you are missing some details"})
         if not sales.find_one({"name": info.get("name"), "admin": info.get("admin").lower()}):
-            chat = db.chat
-            users = db.users
-            c = {"msg": []}
-            cid = chat.insert_one(c)
-            sale = {
-                "likes": [],
-                "biders": [],
-                "admin": info.get("admin").lower(),
-                "chat": str(cid.inserted_id),
-                "image": info.get("image"),
-                "details": info.get("details"),
-                "high": "no one gave a bid yet",
-                "name": info.get("name"),
-                "price": float(info.get("price")),
-                "sold": False
-            }
-            sales.insert_one(sale)
-            s = sales.find_one(sale)
-            users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": str(s["_id"])}})
-            return jsonify({"status": "success", "message": "you have crated a new sale"})
+            if float(info.get("price")) < 999999999999:
+                chat = db.chat
+                users = db.users
+                c = {"msg": []}
+                cid = chat.insert_one(c)
+                sale = {
+                    "likes": [],
+                    "biders": [],
+                    "admin": info.get("admin").lower(),
+                    "chat": str(cid.inserted_id),
+                    "image": info.get("image"),
+                    "details": info.get("details"),
+                    "high": "no one gave a bid yet",
+                    "name": info.get("name"),
+                    "price": float(info.get("price")),
+                    "sold": False
+                }
+                sales.insert_one(sale)
+                s = sales.find_one(sale)
+                users.update_one({"email": info.get("admin").lower()}, {"$push": {"sales": str(s["_id"])}})
+                return jsonify({"status": "success", "message": "you have crated a new sale"})
+            else:
+                return jsonify({"status": "error", "message": "this is too high of a number"})
         else:
             return jsonify({"status": "error", "message": "you already have a sale with this name"})
     else:
@@ -104,15 +107,18 @@ def bid(request):
     if checkuser(info.get("email").lower(), info.get("password"), users):
         sales = db.sales
         sale = sales.find_one({"_id": ObjectId(info.get("id"))})
-        if sale["price"] < float(info.get("price")):
-            if not users.find_one({"email": info.get("email").lower(), "offers": info.get("id"), 'password': info.get("password")}):
-                users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("id")}})
-            user = users.find_one({"email": info.get("email").lower(), 'password': info.get("password")})
-            sales.update_one({"_id": ObjectId(info.get("id"))}, {"$set": {"high": info.get("email").lower(), "price": float(info.get("price"))}})
-            sales.update_one({"_id": ObjectId(info.get("id"))}, {"$addToSet": {"biders": user["fname"]+" "+user["lname"]}})
-            return jsonify({"status": "success", "message": "you have updated the sale"})
+        if float(info.get("price")) < 999999999999:
+            if sale["price"] < float(info.get("price")):
+                if not users.find_one({"email": info.get("email").lower(), "offers": info.get("id"), 'password': info.get("password")}):
+                    users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("id")}})
+                user = users.find_one({"email": info.get("email").lower(), 'password': info.get("password")})
+                sales.update_one({"_id": ObjectId(info.get("id"))}, {"$set": {"high": info.get("email").lower(), "price": float(info.get("price"))}})
+                sales.update_one({"_id": ObjectId(info.get("id"))}, {"$addToSet": {"biders": user["fname"]+" "+user["lname"]}})
+                return jsonify({"status": "success", "message": "you have updated the sale"})
+            else:
+                return jsonify({"status": "error", "message": "you need to bid higher"})
         else:
-            return jsonify({"status": "error", "message": "you need to bid higher"})
+            jsonify({"status": "error", "message": "this is too high of a number"})
     else:
         return jsonify({"status": "error", "message": "I don't recognize you"})
 
