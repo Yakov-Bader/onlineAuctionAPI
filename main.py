@@ -15,8 +15,8 @@ socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=True, logger=
 
 
 # TODO: check with verification to mail that it is real mail
-# web: gunicorn main:app --preload
-# gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 module:app
+# TODO: make sure it saves on enter in the message
+
 @app.route('/git_update', methods=['POST'])
 def git_update():
     repo = git.Repo('./onlineAuctionAPI')
