@@ -113,7 +113,7 @@ def bid(request):
                     users.update_one({"email": info.get("email").lower()}, {"$push": {"offers": info.get("id")}})
                 user = users.find_one({"email": info.get("email").lower(), 'password': info.get("password")})
                 sales.update_one({"_id": ObjectId(info.get("id"))}, {"$set": {"high": info.get("email").lower(), "price": float(info.get("price"))}})
-                sales.updateOne({"_id": ObjectId(info.get("id"))}, {"$push": {"biders": user["fname"]+" "+user["lname"]}})
+                sales.update_one({"_id": ObjectId(info.get("id"))}, {"$push": {"biders": user["fname"]+" "+user["lname"]}})
                 return jsonify({"status": "success", "message": "you have updated the sale"})
             else:
                 return jsonify({"status": "error", "message": "you need to bid higher"})
