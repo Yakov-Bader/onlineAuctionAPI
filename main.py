@@ -2,7 +2,6 @@ from inup import *
 from my import *
 from sales import *
 from chat import *
-import os
 from flask import Flask, request, jsonify
 from flask_cors import cross_origin, CORS
 import git
@@ -15,7 +14,6 @@ socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=True, logger=
 
 
 # TODO: check with verification to mail that it is real mail
-# TODO: make sure it saves on enter in the message
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
@@ -115,26 +113,6 @@ def GetChat():
 @app.route('/sell', methods=['POST'])
 def Sell():
     return sell(request)
-
-
-@socketio.on('connect')
-def on_join():
-    print("connected")
-
-
-@socketio.on('send')
-def on_send(data):
-    send(data)
-
-
-@socketio.on('join')
-def on_join(data):
-    join(data)
-
-
-@socketio.on('leave')
-def on_leave(data):
-    leave(data)
 
 
 if __name__ == '__main__':

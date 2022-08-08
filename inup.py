@@ -1,6 +1,9 @@
 from bson import ObjectId
 from flask import jsonify
 from funcs import checkuser, connect
+import smtplib
+from email.message import EmailMessage
+import os
 
 
 def signin(request):
@@ -32,6 +35,27 @@ def signup(request):
                 "saved": []
             }
             users.insert_one(user)
+
+            msg = EmailMessage()
+            msg['Subject'] = 'Welcome to Online Auction'
+            msg["From"] = 'onlineauction176@gmail.com'
+            msg['To'] = info.get("email")
+            msg.set_content("welcome "+info.get("fname")+" to Online Action, we are so happy that you are using us, if you have any questions you could send them to this mail")
+            msg.add_alternative("""\
+                <!DOCTYPE html>
+                <html>
+                    <body>
+                        <h1>click here to verify your email</h1>
+                        <button type="button">Click Me!</button>
+                    </body>
+                </html>
+            """, subtype='html')
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                smtp.login('onlineauction176@gmail.com', os.getenv("PASS"))
+
+                smtp.send_message(msg)
+
             return jsonify({"status": "success",
                             "message": " welcome to {} {} ".format(info.get("fname"), info.get("lname").lower())})
         else:
@@ -49,7 +73,7 @@ def delete(request):
         sales = db.sales
         chat = db.chat
         for id in user["sales"]:
-            s = sales.delete_one({"_id": ObjectId(id)})
+            s = sales.find_one({"_id": ObjectId(id)})
             ch = s["chat"]
             chat.delete_one({"_id": ObjectId(ch)})
         users.delete_one({"email": info.get("email").lower(), "password": info.get("password")})

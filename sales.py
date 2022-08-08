@@ -46,7 +46,7 @@ def getsales(request):
                 amount = int(info.get("amount"))
         else:
             amount = 9
-        for s in sales.find({}).limit(int(amount)):
+        for s in sales.find({}).limit(amount):
             print(s)
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
             s["saleid"] = str(s["_id"])

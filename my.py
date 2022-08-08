@@ -19,7 +19,10 @@ def mySales(request):
             if not str(info.get("amount")).isnumeric():
                 return jsonify({"status": "error", "message": "you need to give a valid number"})
             else:
-                amount = int(info.get("amount"))
+                if info.get("amount") == "0":
+                    amount = len(mysalesid)
+                else:
+                    amount = int(info.get("amount"))
         else:
             amount = 9
         for id in mysalesid[0:amount]:
@@ -59,7 +62,10 @@ def mySaved(request):
             if not str(info.get("amount")).isnumeric():
                 return jsonify({"status": "error", "message": "you need to give a valid number"})
             else:
-                amount = int(info.get("amount"))
+                if info.get("amount") == "0":
+                    amount = len(mysavedid)
+                else:
+                    amount = int(info.get("amount"))
         else:
             amount = 9
         for id in mysavedid[0:amount]:
@@ -99,7 +105,10 @@ def myOffers(request):
             if not str(info.get("amount")).isnumeric():
                 return jsonify({"status": "error", "message": "you need to give a valid number"})
             else:
-                amount = int(info.get("amount"))
+                if info.get("amount") == "0":
+                    amount = len(myoffersid)
+                else:
+                    amount = int(info.get("amount"))
         else:
             amount = 9
         for id in myoffersid[0:amount]:
@@ -128,7 +137,8 @@ def getProfile(request):
     db = connect()
     users = db.users
     if checkuser(info.get("email"), info.get("password"), users):
-        user = users.find_one({'email': info.get("email"), 'password': info.get("password")}, {"_id": 0, "offers": 0, "sales": 0, "saved": 0})
+        user = users.find_one({'email': info.get("email"), 'password': info.get("password")},
+                              {"_id": 0, "offers": 0, "sales": 0, "saved": 0})
         print(user['fname'])
         return jsonify({"status": "success", "message": user})
     else:
@@ -140,7 +150,8 @@ def updateProfile(request):
     db = connect()
     users = db.users
     if checkuser(info.get("email"), info.get("password"), users):
-        users.update_one({"email": info.get("email").lower()}, {"$set": {"fname": info.get("newname"), "lname": info.get("newlast"), "password": info.get("newpass")}})
+        users.update_one({"email": info.get("email").lower()}, {
+            "$set": {"fname": info.get("newname"), "lname": info.get("newlast"), "password": info.get("newpass")}})
         return jsonify({"status": "success", "message": "you have just updated you profile"})
     else:
         return jsonify({"status": "error", "message": "I don't recognize you"})
@@ -152,7 +163,7 @@ def sell(request):
     users = db.users
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
-        if users.find_one({"sales": info.get("id"), "email": info.get("email"), "password":info.get("password")}):
+        if users.find_one({"sales": info.get("id"), "email": info.get("email"), "password": info.get("password")}):
             sales.update_one({"_id": ObjectId(info.get("id"))}, {"$set": {"sold": True}})
             sale = sales.find_one({"_id": ObjectId(info.get("id"))})
             return jsonify({"status": "success", "message": "you have just sold the sale to {}".format(sale["high"])})
