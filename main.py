@@ -35,7 +35,7 @@ def Signup():
     return signup(request)
 
 
-@app.route('/verify<id>')
+@app.route('/verify/<id>')
 def Verify(request, id):
     return verify(request, id)
 
