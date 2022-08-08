@@ -24,29 +24,29 @@ def signup(request):
     if info.get("password") and info.get("fname") and info.get("lname") and info.get("email"):
         db = connect()
         users = db.users
-        if not users.find_one({'email': info.get("email").lower()}):
+        verify = db.verify
+        if not (users.find_one({'email': info.get("email").lower()}) or users.find_one({'email': info.get("email").lower()})):
             user = {
                 "fname": info.get("fname"),
                 "lname": info.get("lname"),
                 "email": info.get("email").lower(),
-                "password": info.get("password"),
-                "sales": [],
-                "offers": [],
-                "saved": []
+                "password": info.get("password")
             }
-            users.insert_one(user)
-
+            verify.insert_one(user)
+            ver = verify.find_one(user)
+            id= str(ver["_id"])
             msg = EmailMessage()
             msg['Subject'] = 'Welcome to Online Auction'
             msg["From"] = 'onlineauction176@gmail.com'
             msg['To'] = info.get("email")
             msg.set_content("welcome "+info.get("fname")+" to Online Action, we are so happy that you are using us, if you have any questions you could send them to this mail")
-            msg.add_alternative("""\
+            msg.add_alternative(f"""\
                 <!DOCTYPE html>
                 <html>
                     <body>
-                        <h1>click here to verify your email</h1>
-                        <button type="button">Click Me!</button>
+                        <form action="https://onlineauctionapi.herokuapp.com/verify/{id}" method="get">
+                          <input type="submit" value="Verify">
+                        </form>
                     </body>
                 </html>
             """, subtype='html')
@@ -56,12 +56,28 @@ def signup(request):
 
                 smtp.send_message(msg)
 
-            return jsonify({"status": "success",
-                            "message": " welcome to {} {} ".format(info.get("fname"), info.get("lname").lower())})
+            return jsonify({"status": "verify", "message": " go to your email to verify"})
         else:
             return jsonify({"status": "error", "message": "you already exist"})
     else:
         return jsonify({"status": "error", "message": "you are missing some arguments"})
+
+
+def verify(request):
+    info = request.json
+    db = connect()
+    users = db.users
+    verify = db.verify
+    user = {
+        "fname": info.get("fname"),
+        "lname": info.get("lname"),
+        "email": info.get("email").lower(),
+        "password": info.get("password"),
+        "sales": [],
+        "offers": [],
+        "saved": []
+    }
+    users.insert_one(user)
 
 
 def delete(request):
@@ -76,6 +92,7 @@ def delete(request):
             s = sales.find_one({"_id": ObjectId(id)})
             ch = s["chat"]
             chat.delete_one({"_id": ObjectId(ch)})
+            sales.delete_one({"_id": ObjectId(id)})
         users.delete_one({"email": info.get("email").lower(), "password": info.get("password")})
         return jsonify({"status": "success",
                         "message": "you deleted {} account and it's sales, you could always sign up again".format(
