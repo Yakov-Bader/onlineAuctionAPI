@@ -25,7 +25,7 @@ def signup(request):
         db = connect()
         users = db.users
         verify = db.verify
-        if not (users.find_one({'email': info.get("email").lower()}) or users.find_one({'email': info.get("email").lower()})):
+        if not (users.find_one({'email': info.get("email").lower()}) or verify.find_one({'email': info.get("email").lower()})):
             user = {
                 "fname": info.get("fname"),
                 "lname": info.get("lname"),
@@ -63,21 +63,19 @@ def signup(request):
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
 
-def verify(request):
+def verify(request, id):
     info = request.json
     db = connect()
     users = db.users
     verify = db.verify
-    user = {
-        "fname": info.get("fname"),
-        "lname": info.get("lname"),
-        "email": info.get("email").lower(),
-        "password": info.get("password"),
-        "sales": [],
-        "offers": [],
-        "saved": []
-    }
-    users.insert_one(user)
+    if verify.find_one({"_id":ObjectId(id)}):
+        user = verify.find_one({"_id":ObjectId(id)})
+        del user["_id"]
+        user["sales"] = []
+        user["offers"] = []
+        user["saved"] = []
+        users.insert_one(user)
+        verify.delete_one({"_id": ObjectId(id)})
 
 
 def delete(request):

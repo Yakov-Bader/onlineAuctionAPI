@@ -35,6 +35,11 @@ def Signup():
     return signup(request)
 
 
+@app.route('/verify<id>')
+def Verify(request, id):
+    return verify(request, id)
+
+
 @app.route('/signin', methods=['POST'])
 def signIn():
     return signin(request)
