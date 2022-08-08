@@ -45,7 +45,7 @@ def signup(request):
                 <html>
                     <body>
                         <form action="https://onlineauctionapi.herokuapp.com/verify/{id}" method="get">
-                          <input type="submit" value="Verify">
+                          <input type="submit" value="click here to Verify your account">
                         </form>
                     </body>
                 </html>
@@ -79,7 +79,7 @@ def verify(id):
                 <!DOCTYPE html>
                 <html>
                     <body>
-                        <h1>Welcome to Online Auctio<h1>
+                        <h1>Welcome to Online Auction<h1>
                         <h1>succeded<h1>
                     </body>
                 </html>
@@ -89,7 +89,7 @@ def verify(id):
                 <!DOCTYPE html>
                 <html>
                     <body>
-                        <h1>Welcome to Online Auctio<h1>
+                        <h1>Welcome to Online Auction<h1>
                         <h1>you or already have a account, or didnt sign up<h1>
                     </body>
                 </html>
