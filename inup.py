@@ -63,8 +63,7 @@ def signup(request):
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
 
-def verify(request, id):
-    info = request.json
+def verify(id):
     db = connect()
     users = db.users
     verify = db.verify
@@ -76,7 +75,9 @@ def verify(request, id):
         user["saved"] = []
         users.insert_one(user)
         verify.delete_one({"_id": ObjectId(id)})
-
+        return jsonify({"status": "success", "message": "yay, it worked"})
+    else:
+        return jsonify({"status": "error", "message": "yay, it worked"})
 
 def delete(request):
     info = request.json

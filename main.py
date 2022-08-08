@@ -13,8 +13,6 @@ CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=True, logger=True)
 
 
-# TODO: check with verification to mail that it is real mail
-
 @app.route('/git_update', methods=['POST'])
 def git_update():
     repo = git.Repo('./onlineAuctionAPI')
@@ -35,9 +33,9 @@ def Signup():
     return signup(request)
 
 
-@app.route('/verify/<id>')
-def Verify(request, id):
-    return verify(request, id)
+@app.route('/verify/<id>', methods=['POST', 'GET'])
+def Verify(id):
+    return verify(id)
 
 
 @app.route('/signin', methods=['POST'])
