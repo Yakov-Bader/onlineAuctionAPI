@@ -75,9 +75,25 @@ def verify(id):
         user["saved"] = []
         users.insert_one(user)
         verify.delete_one({"_id": ObjectId(id)})
-        return jsonify({"status": "success", "message": "yay, it worked"})
+        return """\
+                <!DOCTYPE html>
+                <html>
+                    <body>
+                        <h1>Welcome to Online Auctio<h1>
+                        <h1>succeded<h1>
+                    </body>
+                </html>
+            """
     else:
-        return jsonify({"status": "error", "message": "yay, it worked"})
+        return """\
+                <!DOCTYPE html>
+                <html>
+                    <body>
+                        <h1>Welcome to Online Auctio<h1>
+                        <h1>you or already have a account, or didnt sign up<h1>
+                    </body>
+                </html>
+            """
 
 
 def delete(request):
@@ -100,3 +116,4 @@ def delete(request):
     else:
         return jsonify(
             {"status": "error", "message": "the {} account does not exist".format(info.get("email").lower())})
+
