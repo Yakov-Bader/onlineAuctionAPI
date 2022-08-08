@@ -75,9 +75,7 @@ def verify(id):
         user["saved"] = []
         users.insert_one(user)
         verify.delete_one({"_id": ObjectId(id)})
-        return jsonify({"status": "success", "message": "yay, it worked"})
-    else:
-        return jsonify({"status": "error", "message": "yay, it worked"})
+
 
 def delete(request):
     info = request.json
