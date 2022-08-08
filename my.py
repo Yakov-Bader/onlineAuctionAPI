@@ -14,7 +14,15 @@ def mySales(request):
         mysalesid = user["sales"]
         if not mysalesid:
             return jsonify({"status": "error", "message": "you did not create a sale yet"})
-        for id in mysalesid:
+
+        if info.get("amount"):
+            if not str(info.get("amount")).isnumeric():
+                return jsonify({"status": "error", "message": "you need to give a valid number"})
+            else:
+                amount = int(info.get("amount"))
+        else:
+            amount = 9
+        for id in mysalesid[0:amount]:
             sale = sales.find_one({"_id": ObjectId(id)})
             if not sale:
                 users.update_one({"email": info.get("email").lower()}, {"$pull": {"sales": id}})
@@ -46,7 +54,15 @@ def mySaved(request):
         mysavedid = user["saved"]
         if not mysavedid:
             return jsonify({"status": "error", "message": "you have no saved sales"})
-        for id in mysavedid:
+
+        if info.get("amount"):
+            if not str(info.get("amount")).isnumeric():
+                return jsonify({"status": "error", "message": "you need to give a valid number"})
+            else:
+                amount = int(info.get("amount"))
+        else:
+            amount = 9
+        for id in mysavedid[0:amount]:
             sale = sales.find_one({"_id": ObjectId(id)})
             if not sale:
                 users.update_one({"email": info.get("email").lower()}, {"$pull": {"saved": id}})
@@ -78,7 +94,15 @@ def myOffers(request):
         myoffersid = user["offers"]
         if not myoffersid:
             return jsonify({"status": "error", "message": "you did not bid on a sale yet"})
-        for id in myoffersid:
+
+        if info.get("amount"):
+            if not str(info.get("amount")).isnumeric():
+                return jsonify({"status": "error", "message": "you need to give a valid number"})
+            else:
+                amount = int(info.get("amount"))
+        else:
+            amount = 9
+        for id in myoffersid[0:amount]:
             sale = sales.find_one({"_id": ObjectId(id)})
             if not sale:
                 users.update_one({"email": info.get("email").lower()}, {"$pull": {"offers": id}})

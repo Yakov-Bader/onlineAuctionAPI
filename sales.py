@@ -39,9 +39,14 @@ def getsales(request):
     sales = db.sales
     if checkuser(info.get("email"), info.get("password"), users):
         results = []
-        if not str(info.get("amount")).isnumeric():
-            return jsonify({"status": "error", "message": "you need to give a valid number"})
-        for s in sales.find({}).limit(int(info.get("amount"))):
+        if info.get("amount"):
+            if not str(info.get("amount")).isnumeric():
+                return jsonify({"status": "error", "message": "you need to give a valid number"})
+            else:
+                amount = int(info.get("amount"))
+        else:
+            amount = 9
+        for s in sales.find({}).limit(int(amount)):
             print(s)
             user = users.find_one({"email": info.get("email"), "password": info.get("password")})
             s["saleid"] = str(s["_id"])
