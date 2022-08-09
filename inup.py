@@ -98,7 +98,7 @@ def verify(request):
                 <html>
                     <body style="background-color: #9c9c9c; text-align: center; padding:20px">
                         <h1>Welcome to Online Auction<h1>
-                        <h2>You or already have a account, or didnt sign up.<h2>
+                        <h2>Either you already have a account, or you didn't sign up.<h2>
                         <p>Click <a href="https://main--auctionlive.netlify.app/">here</a> to go to the website.</p>
                     </body>
                 </html>
