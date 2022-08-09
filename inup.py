@@ -81,11 +81,11 @@ def verify(request):
         user["offers"] = []
         user["saved"] = []
         users.insert_one(user)
-        verify.delete_one({"_id": id})
+        verify.delete_one({"_id": ObjectId(id)})
         return """\
                 <!DOCTYPE html>
                 <html>
-                    <body>
+                    <body style="background-color: #9c9c9c; text-align: center; padding:20px">
                         <h1>Welcome to Online Auction</h1>
                         <h2>succeded</h2>
                         <p>click <a href="https://main--auctionlive.netlify.app/">here</a> to go to the website</p>
@@ -96,7 +96,7 @@ def verify(request):
         return f"""\
                 <!DOCTYPE html>
                 <html>
-                    <body>
+                    <body style="background-color: #9c9c9c; text-align: center; padding:20px">
                         <h1>Welcome to Online Auction<h1>
                         <h2>you or already have a account, or didnt sign up <h2>
                         <p>click <a href="https://main--auctionlive.netlify.app/">here</a> to go to the website</p>
