@@ -56,7 +56,7 @@ def signup(request):
 
                 smtp.send_message(msg)
 
-            return jsonify({"status": "verify", "message": " go to your email to verify"})
+            return jsonify({"status": "verify", "message": "go to your email to verify, and check your spam if you dont see the mail"})
         else:
             return jsonify({"status": "error", "message": "you already exist"})
     else:
