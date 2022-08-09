@@ -74,8 +74,8 @@ def verify(request):
     db = connect()
     users = db.users
     verify = db.verify
-    if verify.find_one({"_id": id}):
-        user = verify.find_one({"_id":id})
+    if verify.find_one({"_id": ObjectId(id)}):
+        user = verify.find_one({"_id": ObjectId(id)})
         del user["_id"]
         user["sales"] = []
         user["offers"] = []
