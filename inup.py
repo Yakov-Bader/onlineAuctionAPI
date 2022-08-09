@@ -69,7 +69,7 @@ def signup(request):
 
 
 def verify(request):
-    id = request.form.get("_id", "")
+    id = request.form['_id']
     print(id)
     db = connect()
     users = db.users
