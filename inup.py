@@ -43,7 +43,7 @@ def signup(request):
             msg.add_alternative(f"""\
                 <!DOCTYPE html>
                 <html>
-                    <body  style="background-color: #576c77; text-align: center;">
+                    <body  style="background-color: #576c77; text-align: center; margin:20px">
                         <h1 style="color: rgb(134, 163, 180);">Welcome to Online Auction</h1>
                         <p>hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it</p>
                         <form action="https://onlineauctionapi.herokuapp.com/verify/" method="POST">
