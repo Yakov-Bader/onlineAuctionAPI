@@ -45,7 +45,7 @@ def signup(request):
                 <!DOCTYPE html>
                 <html>
                     <body  style="background-color: #9c9c9c; text-align: center; padding:20px">
-                        <h1 style="color: rgb(134, 163, 180) ;">Welcome to Online Auction</h1>
+                        <h1>Welcome to Online Auction</h1>
                         <p>hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it</p>
                         <form action="https://onlineauctionapi.herokuapp.com/verify" method="POST">
                             <label for="fname">click here to </label>
