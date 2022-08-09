@@ -35,6 +35,7 @@ def signup(request):
             verify.insert_one(user)
             ver = verify.find_one(user)
             id= str(ver["_id"])
+            print(id)
             msg = EmailMessage()
             msg['Subject'] = 'Welcome to Online Auction'
             msg["From"] = 'onlineauction176@gmail.com'
@@ -48,7 +49,7 @@ def signup(request):
                         <p>hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it</p>
                         <form action="https://onlineauctionapi.herokuapp.com/verify" method="POST">
                             <label for="fname">click here to </label>
-                            <input style="display: none !important;" type="text" id="id" name="id" value="{id}"><br><br>
+                            <input style="display: none !important;" type="text" id="_id" name="id" value="{id}"><br><br>
                             <input style="background-color: rgb(134, 163, 180); border-radius: 50px; height: 30px; max-width: 50%; min-width: 20%" type="submit" id="btn" value="Verify your account">
                         </form>
                     </body>
@@ -68,7 +69,7 @@ def signup(request):
 
 
 def verify(request):
-    id = request.form.get("id")
+    id = request.form.get("_id")
     print(id)
     db = connect()
     users = db.users
@@ -91,12 +92,12 @@ def verify(request):
                 </html>
             """
     else:
-        return """\
+        return f"""\
                 <!DOCTYPE html>
                 <html>
                     <body>
                         <h1>Welcome to Online Auction<h1>
-                        <h2>you or already have a account, or didnt sign up<h2>
+                        <h2>you or already have a account, or didnt sign up {id}<h2>
                     </body>
                 </html>
             """
