@@ -46,9 +46,9 @@ def signup(request):
                 <html>
                     <body  style="background-color: #9c9c9c; text-align: center; padding:20px">
                         <h1>Welcome to Online Auction</h1>
-                        <p>hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it</p>
+                        <p>Hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it.</p>
                         <form action="https://onlineauctionapi.herokuapp.com/verify" method="POST">
-                            <label for="fname">click here to verify your account</label>
+                            <label for="fname">Click here to verify your account.</label>
                             <input style="display: none !important;" type="text" id="derid" name="verid" value="{id}"><br><br>
                             <input style="background-color: rgb(134, 163, 180); border-radius: 50px; height: 30px; max-width: 50%; min-width: 20%" type="submit" id="btn" value="Verify your account">
                         </form>
@@ -87,8 +87,8 @@ def verify(request):
                 <html>
                     <body style="background-color: #9c9c9c; text-align: center; padding:20px">
                         <h1>Welcome to Online Auction</h1>
-                        <h2>succeded</h2>
-                        <p>click <a href="https://main--auctionlive.netlify.app/">here</a> to go to the website</p>
+                        <h2>Verification succeded</h2>
+                        <p>Click <a href="https://main--auctionlive.netlify.app/">here</a> to go to the website.</p>
                     </body>
                 </html>
             """
@@ -98,8 +98,8 @@ def verify(request):
                 <html>
                     <body style="background-color: #9c9c9c; text-align: center; padding:20px">
                         <h1>Welcome to Online Auction<h1>
-                        <h2>you or already have a account, or didnt sign up <h2>
-                        <p>click <a href="https://main--auctionlive.netlify.app/">here</a> to go to the website</p>
+                        <h2>You or already have a account, or didnt sign up.<h2>
+                        <p>Click <a href="https://main--auctionlive.netlify.app/">here</a> to go to the website.</p>
                     </body>
                 </html>
             """
