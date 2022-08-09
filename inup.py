@@ -44,13 +44,13 @@ def signup(request):
             msg.add_alternative(f"""\
                 <!DOCTYPE html>
                 <html>
-                    <body  style="background-color: #576c77; text-align: center; padding:20px">
-                        <h1 style="color: rgb(134, 163, 180);">Welcome to Online Auction</h1>
+                    <body  style="background-color: rgb(134, 163, 180); text-align: center; padding:20px">
+                        <h1 style="color: #576c77 ;">Welcome to Online Auction</h1>
                         <p>hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it</p>
                         <form action="https://onlineauctionapi.herokuapp.com/verify" method="POST">
                             <label for="fname">click here to </label>
                             <input style="display: none !important;" type="text" id="_id" name="id" value="{id}"><br><br>
-                            <input style="background-color: rgb(134, 163, 180); border-radius: 50px; height: 30px; max-width: 50%; min-width: 20%" type="submit" id="btn" value="Verify your account">
+                            <input style="background-color: #576c77; border-radius: 50px; height: 30px; max-width: 50%; min-width: 20%" type="submit" id="btn" value="Verify your account">
                         </form>
                     </body>
                 </html>
@@ -69,7 +69,7 @@ def signup(request):
 
 
 def verify(request):
-    id = request.form.get("_id")
+    id = request.form.get("_id", "")
     print(id)
     db = connect()
     users = db.users
