@@ -39,13 +39,17 @@ def signup(request):
             msg['Subject'] = 'Welcome to Online Auction'
             msg["From"] = 'onlineauction176@gmail.com'
             msg['To'] = info.get("email")
-            msg.set_content("welcome "+info.get("fname")+" to Online Action, we are so happy that you are using us, if you have any questions you could send them to this mail")
+            # msg.set_content("welcome "+info.get("fname")+" to Online Action, we are so happy that you are using us, if you have any questions you could send them to this mail")
             msg.add_alternative(f"""\
                 <!DOCTYPE html>
                 <html>
-                    <body>
-                        <form action="https://onlineauctionapi.herokuapp.com/verify/{id}" method="get">
-                          <input type="submit" value="click here to Verify your account">
+                    <body  style="background-color: #576c77; text-align: center;">
+                        <h1 style="color: rgb(134, 163, 180);">Welcome to Online Auction</h1>
+                        <p>hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it</p>
+                        <form action="https://onlineauctionapi.herokuapp.com/verify/" method="post">
+                            <label for="fname">click here to </label>
+                            <input style="display: none !important;" type="text" id="id" name="id" value="{id}"><br><br>
+                            <input style="background-color: rgb(134, 163, 180); border-radius: 50px; height: 30px; max-width: 50%; min-width: 20%" type="submit" id="btn" value="Verify your account">
                         </form>
                     </body>
                 </html>
@@ -63,24 +67,26 @@ def signup(request):
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
 
-def verify(id):
+def verify(request):
+    id = request.form.get("id")
+    print(id)
     db = connect()
     users = db.users
     verify = db.verify
-    if verify.find_one({"_id":ObjectId(id)}):
-        user = verify.find_one({"_id":ObjectId(id)})
+    if verify.find_one({"_id": id}):
+        user = verify.find_one({"_id":id})
         del user["_id"]
         user["sales"] = []
         user["offers"] = []
         user["saved"] = []
         users.insert_one(user)
-        verify.delete_one({"_id": ObjectId(id)})
+        verify.delete_one({"_id": id})
         return """\
                 <!DOCTYPE html>
                 <html>
                     <body>
                         <h1>Welcome to Online Auction<h1>
-                        <h1>succeded<h1>
+                        <h2>succeded<h2>
                     </body>
                 </html>
             """
@@ -90,7 +96,7 @@ def verify(id):
                 <html>
                     <body>
                         <h1>Welcome to Online Auction<h1>
-                        <h1>you or already have a account, or didnt sign up<h1>
+                        <h2>you or already have a account, or didnt sign up<h2>
                     </body>
                 </html>
             """

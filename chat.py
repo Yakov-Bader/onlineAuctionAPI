@@ -40,15 +40,3 @@ def getChat(request):
     else:
         return jsonify({"status": "error", "message": "I don't recognize you"})
 
-
-def leave(data):
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    send(username + ' has left the room.', to=room)
-
-
-def send(data):
-    message = data['message']
-    room = data['room']
-    send(message, to=room)
