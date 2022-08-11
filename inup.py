@@ -35,23 +35,17 @@ def signup(request):
             verify.insert_one(user)
             ver = verify.find_one(user)
             id= str(ver["_id"])
-            print(id)
             msg = EmailMessage()
             msg['Subject'] = 'Welcome to Online Auction'
             msg["From"] = 'onlineauction176@gmail.com'
             msg['To'] = info.get("email")
-            # msg.set_content("welcome "+info.get("fname")+" to Online Action, we are so happy that you are using us, if you have any questions you could send them to this mail")
             msg.add_alternative(f"""\
                 <!DOCTYPE html>
                 <html>
                     <body  style="background-color: #9c9c9c; text-align: center; padding:20px">
                         <h1>Welcome to Online Auction</h1>
                         <p>Hi {info.get("fname")}, this mail was sent to you because it was used to sign up to <a href="https://main--auctionlive.netlify.app/">Online Auction</a>, if was not done by you, please ignore it.</p>
-                        <form action="https://onlineauctionapi.herokuapp.com/verify" method="POST">
-                            <label for="fname">Click here to verify your account.</label>
-                            <input style="display: none !important;" type="text" id="derid" name="verid" value="{id}"><br><br>
-                            <input style="background-color: rgb(134, 163, 180); border-radius: 50px; height: 30px; max-width: 50%; min-width: 20%" type="submit" id="btn" value="Verify your account">
-                        </form>
+                        <p>to verify your eamil please press <a href="https://onlineauctionapi.herokuapp.com/gotoverify/{id}">here</a></p>
                     </body>
                 </html>
             """, subtype='html')
@@ -68,20 +62,38 @@ def signup(request):
         return jsonify({"status": "error", "message": "you are missing some arguments"})
 
 
+def gotoverify(id):
+    return f"""\
+        <!DOCTYPE html>
+        <html>
+            <body style="background-color: #9c9c9c; text-align: center; padding:20px">
+                <h1>Welcome to Online Auction</h1>
+                <form action="https://onlineauctionapi.herokuapp.com/verify" method="POST">
+                    <label for="email">please enter your email.</label>
+                    <input type="text" id="mail" name="mail"><br><br>
+                    <input style="display: none !important;" type="text" id="id" name="id" value="{id}">
+                    <input style="background-color: rgb(134, 163, 180); border-radius: 50px; height: 30px; max-width: 50%; min-width: 20%" type="submit" id="btn" value="Verify your account">
+                </form>
+            </body>
+        </html>
+    """
+
+
 def verify(request):
-    id = request.form.get('verid')
+    mail = request.form.get('mail')
+    id = request.form.get('id')
     print(id)
     db = connect()
     users = db.users
     verify = db.verify
-    if verify.find_one({"_id": ObjectId(id)}):
-        user = verify.find_one({"_id": ObjectId(id)})
+    if verify.find_one({"_id": ObjectId(id), "email": mail}):
+        user = verify.find_one({"_id": ObjectId(id), "email": mail})
         del user["_id"]
         user["sales"] = []
         user["offers"] = []
         user["saved"] = []
         users.insert_one(user)
-        verify.delete_one({"_id": ObjectId(id)})
+        verify.delete_one({"_id": ObjectId(id), "email": mail})
         return """\
                 <!DOCTYPE html>
                 <html>

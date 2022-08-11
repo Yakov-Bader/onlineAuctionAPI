@@ -38,6 +38,11 @@ def Verify():
     return verify(request)
 
 
+@app.route('/gotoverify/<id>', methods=['POST', 'GET'])
+def GoToVerify(id):
+    return gotoverify(id)
+
+
 @app.route('/signin', methods=['POST'])
 def signIn():
     return signin(request)
